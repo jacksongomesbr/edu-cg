@@ -1,0 +1,83 @@
+site_name: Computação Gráfica
+site_description: Conteúdo interativo sobre conceitos e ferramentas para geração e processamento de imagem
+site_author: Jackson Souza
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - toc.integrate
+    - search.highlight
+    - search.share
+    - header.autohide
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: jacksongomesbr
+      repo: compgrafbook
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra_javascript:
+  - assets/js/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - assets/js/example-player.js
+
+extra_css:
+  - assets/css/example-player.css
+
+plugins:
+  - search:
+      lang: pt
+
+nav:
+  - Home: index.md
+  - Curso: 0-course/index.md
+  - Computação Gráfica: 1-computacao-grafica/index.md
+  - Imagem Digital: 2-digital-imaging/index.md
+  - Síntese:
+    - Introdução: 3-synthesis/index.md
+    - Processing: 3-synthesis/processing.md
+    - Fundamentos do Processing: 3-synthesis/fundamentals.md
+    - Aleatoriedade: 3-synthesis/randomness/index.md
