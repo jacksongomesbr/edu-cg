@@ -1,0 +1,180 @@
+/* docs/assets/css/example-player.css */
+
+/* Estilos base para o player */
+.example-player {
+    margin: 2rem 0;
+    border: 2px dashed var(--md-default-fg-color--lighter);
+    padding: 1rem;
+    background: var(--md-code-bg-color);
+    border-radius: 8px;
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-player::before {
+    content: "🎨 Carregando P5.js Sketch...";
+    display: block;
+    text-align: center;
+    color: var(--md-default-fg-color--light);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Esconder o texto de loading após a inicialização */
+.example-player.initialized::before {
+    display: none;
+}
+
+/* Estilos para o componente renderizado */
+.example-component {
+    clear: both;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    background: var(--md-code-bg-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.example-component .example-iframe-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: white;
+}
+
+.example-component .loading-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--md-default-fg-color--light);
+    z-index: 10;
+}
+
+.example-component iframe {
+    width: 100%;
+    border: none;
+    transition: opacity 0.3s ease;
+    display: block;
+}
+
+.example-component .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    background: var(--md-default-bg-color);
+}
+
+.example-component .controls-left {
+    display: flex;
+}
+
+.example-component .control-btn {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--md-default-fg-color--lightest);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--md-default-fg-color);
+    transition: background-color 0.2s ease;
+}
+
+.example-component .control-btn:hover {
+    background: var(--md-accent-fg-color--transparent);
+}
+
+.example-component .control-btn .icon {
+    display: flex;
+    align-items: center;
+    margin-right: 0.4rem;
+}
+
+.example-component .control-btn .button-text {
+    margin-left: 0.2rem;
+}
+
+.example-component .editor-link-container {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    color: var(--md-default-fg-color--light);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.example-component .editor-link-container:hover {
+    color: var(--md-primary-fg-color);
+    text-decoration: underline;
+}
+
+.example-component .editor-link-container .icon {
+    margin-left: 0.3rem;
+    opacity: 0.7;
+}
+
+/* Utilitários */
+.hidden {
+    display: none !important;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .example-component .control-btn .button-text {
+        display: none;
+    }
+    
+    .example-component .editor-link {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .example-component .controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .example-component .controls-left {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .example-component .control-btn {
+        border-right: none;
+        border-bottom: 1px solid var(--md-default-fg-color--lightest);
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* Integração com Material Design */
+.md-content .example-component {
+    margin: 2rem 0;
+}
+
+/* Dark mode support */
+[data-md-color-scheme="slate"] .example-component .example-iframe-container {
+    background: #1e1e1e;
+}
+
+[data-md-color-scheme="slate"] .example-component iframe {
+    border-radius: 4px;
+}
+
