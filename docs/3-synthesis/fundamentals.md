@@ -45,7 +45,7 @@ O desenho de formas pode ser feito por meio de funções que desenham "primitiva
 
 <div class="example-player"
      data-example-title="Walker random"
-     data-example-path="/examples/synthesis/8-fundamentals-shapes"
+     data-example-path="{{ config.site_url }}/examples/synthesis/8-fundamentals-shapes"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/JHj7jhJsp">
 </div>
 
@@ -84,7 +84,7 @@ Por fim, a função [`triangle()`](https://p5js.org/reference/p5/triangle/) dese
 
 A figura a seguir ajuda a ilustrar essas informações, indicando as coordenadas e os valores utilizados para o desenho de cada forma primitiva.
 
-![](/3-synthesis/image1.png)
+![](image1.png)
 
 Na sequência das habilidades iniciais de lidar com a p5.js, temos a evolução para utilizar recursos de animação, o que mostra a próxima seção.
 
@@ -97,7 +97,7 @@ Código que realiza animação, geralmente, altera valores de variáveis ou par�
 
 <div class="example-player"
      data-example-title="Animation basics"
-     data-example-path="/examples/synthesis/9-fundamentals-animation"
+     data-example-path="{{ config.site_url }}/examples/synthesis/9-fundamentals-animation"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/nk-DE6mB_">
 </div>
 
@@ -196,7 +196,7 @@ O sketch a seguir ilustra estes conceitos.
 
 <div class="example-player"
      data-example-title="Animation basics"
-     data-example-path="/examples/synthesis/10-fundamentals-animation-direction"
+     data-example-path="{{ config.site_url }}/examples/synthesis/10-fundamentals-animation-direction"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/cSPml5I7m">
 </div>
 

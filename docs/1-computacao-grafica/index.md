@@ -14,7 +14,7 @@
     - Formatos de imagens bitmap
 
 <object
-  data="/1-computacao-grafica/1-computacao-grafica-slides.pdf"
+  data="{{ config.site_url }}/1-computacao-grafica/1-computacao-grafica-slides.pdf"
   type="application/pdf"
   width="100%"
   height="600"

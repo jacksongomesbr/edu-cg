@@ -1,6 +1,9 @@
 site_name: Computação Gráfica
 site_description: Conteúdo interativo sobre conceitos e ferramentas para geração e processamento de imagem
 site_author: Jackson Souza
+site_url: https://jacksongomesbr.github.io/edu-cg
+repo_url: https://github.com/jacksongomesbr/edu-cg
+repo_name: jacksongomesbr/edu-cg
 
 theme:
   name: material
@@ -70,6 +73,7 @@ extra_css:
 plugins:
   - search:
       lang: pt
+  - macros
 
 nav:
   - Home: index.md
