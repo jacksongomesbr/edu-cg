@@ -49,8 +49,8 @@
             this.ref = null;
             this.loaded = false;
             this.isRunning = !data.pauseAtBeginning;
-            this.aspectRatio = 16 / 13; // Default aspect ratio
-            this.canvasWidth = 768;
+            this.aspectRatio = null; // Will be set when canvas is detected
+            this.canvasWidth = 400;
             this.pausedFrameRate = 0;
             this.intersectionObserver = null;
             
@@ -68,9 +68,15 @@
 
         adjustFrame(canvas) {
             this.aspectRatio = canvas.width / canvas.height;
+            this.canvasWidth = canvas.width;
             this.ref.style.aspectRatio = `${this.aspectRatio}`;
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
+            
+            // Update container max-width based on new aspect ratio
+            const container = this.element.querySelector('.example-component');
+            if (container) {
+                container.style.maxWidth = `${EMBED_MAX_HEIGHT * this.aspectRatio}px`;
+            }
+            
             this.setLoaded(true);
         }
 
@@ -87,7 +93,8 @@
 
                     if (this.data.pauseAtBeginning || !this.isRunning) {
                         const nextFrameCallback = () => {
-                            if (p5Window.frameRate?.() > 0) {
+                            const currentFrameRate = p5Window.getFrameRate?.();
+                            if (currentFrameRate && currentFrameRate > 0) {
                                 this.pause();
                                 this.setIsRunning(false);
                             } else {
@@ -152,10 +159,10 @@
                 const p5Window = this.ref.contentWindow;
                 if (!p5Window) return;
 
-                const targetFrameRate = p5Window.getTargetFrameRate?.();
-                if (targetFrameRate > 0 && p5Window.frameRate) {
+                const currentFrameRate = p5Window.getFrameRate?.();
+                if (currentFrameRate && currentFrameRate > 0 && p5Window.frameRate) {
+                    this.pausedFrameRate = currentFrameRate;
                     p5Window.frameRate(0);
-                    this.pausedFrameRate = targetFrameRate;
                 }
             } catch (error) {
                 console.warn('Error pausing sketch:', error);
@@ -168,8 +175,10 @@
                 const p5Window = this.ref.contentWindow;
                 if (!p5Window) return;
 
-                if (this.pausedFrameRate > 0 && p5Window.frameRate) {
-                    p5Window.frameRate(this.pausedFrameRate);
+                if (p5Window.frameRate) {
+                    // Resume with saved frame rate or default to 60fps
+                    const resumeFrameRate = this.pausedFrameRate > 0 ? this.pausedFrameRate : 60;
+                    p5Window.frameRate(resumeFrameRate);
                 }
             } catch (error) {
                 console.warn('Error resuming sketch:', error);
@@ -180,6 +189,12 @@
             if (this.ref) {
                 this.canvasWidth = this.ref.offsetWidth;
                 this.updateButtonLabels();
+                
+                // Update container max-width on resize
+                const container = this.element.querySelector('.example-component');
+                if (container && this.aspectRatio) {
+                    container.style.maxWidth = `${EMBED_MAX_HEIGHT * this.aspectRatio}px`;
+                }
             }
         }
 
@@ -289,7 +304,10 @@
         createElement() {
             const container = document.createElement('div');
             container.className = 'example-component';
-            container.style.maxWidth = `${EMBED_MAX_HEIGHT * this.aspectRatio}px`;
+            // Max-width will be set when canvas dimensions are detected
+            container.style.width = `${this.data['data-width'] ? (parseFloat(this.data['data-width'])+2) + 'px' : '100%'}`;
+
+            console.log(this.data);
 
             container.innerHTML = `
                 <div class="example-iframe-container">
@@ -298,7 +316,7 @@
                     </div>
                     <iframe
                         class="opacity-0"
-                        style="aspect-ratio: ${this.aspectRatio}"
+                        style="width: ${this.data['data-width'] ? this.data['data-width'] + 'px' : '100%'}; height: ${this.data['data-height'] || 300}px;"
                         loading="lazy"
                         title="${this.data['data-example-title'] || 'P5.js Sketch'}"
                         sandbox="allow-scripts allow-same-origin"
@@ -310,11 +328,6 @@
                         <button class="control-btn reset-btn" title="Reiniciar sketch">
                             <span class="icon">${createIcon('refresh')}</span>
                             <span class="reset-text button-text">Reset</span>
-                        </button>
-
-                        <button class="control-btn play-pause-btn" title="${this.isRunning ? 'Pausar' : 'Reproduzir'}">
-                            <span class="icon">${this.isRunning ? createIcon('pause') : createIcon('play')}</span>
-                            <span class="play-pause-text button-text">${this.isRunning ? 'Pause' : 'Play'}</span>
                         </button>
                     </div>
 
@@ -379,6 +392,8 @@
             // Extrair dados dos atributos data-* do elemento
             const data = {
                 'data-example-path': element.getAttribute('data-example-path'),
+                'data-height': element.getAttribute('data-height'),
+                'data-width': element.getAttribute('data-width'),
                 'data-example-title': element.getAttribute('data-example-title') || 'P5.js Sketch',
                 'data-p5-editor': element.getAttribute('data-p5-editor') || '#',
                 pauseAtBeginning: element.getAttribute('data-pause-at-beginning') === 'true'
