@@ -61,6 +61,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+  - pymdownx.blocks.caption
 
 extra_javascript:
   - assets/js/mathjax.js
@@ -74,6 +75,7 @@ plugins:
   - search:
       lang: pt
   - macros
+  - glightbox
 
 nav:
   - Home: index.md
@@ -85,3 +87,6 @@ nav:
     - Processing: 3-synthesis/processing.md
     - Fundamentos do Processing: 3-synthesis/fundamentals.md
     - Aleatoriedade: 3-synthesis/randomness/index.md
+    - Vetores: 3-synthesis/vectors/index.md
+  - Matemática:
+    - Trigonometria: 4-math/trigonometry/index.md
