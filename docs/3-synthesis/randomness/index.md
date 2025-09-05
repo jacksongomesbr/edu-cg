@@ -15,6 +15,7 @@ A partir disso, e reunindo os conceitos, podemos utilizar a função [`random()`
 <div class="example-player"
      data-example-path="{{ config.site_url }}/examples/synthesis/0-random-walker/index.html"
      data-example-title="Random Walker"
+     data-height="240"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/WahAyN1Zh">
 </div>
 
@@ -113,12 +114,14 @@ Para ilustrar essa característica, considere os exemplos a seguir.
 
 <div class="example-player"
      data-example-title="Surface random"
+     data-height="240"
      data-example-path="{{ config.site_url }}/examples/synthesis/1-surface-random"
      data-p5-editor="https://editor.p5js.org/natureofcode/sketches/O7PsvcpQ3">
 </div>
 
 <div class="example-player"
      data-example-title="Surface noise"
+     data-height="240"
      data-example-path="{{ config.site_url }}/examples/synthesis/2-surface-noise"
      data-p5-editor="https://editor.p5js.org/natureofcode/sketches/UGJqLCZb_">
 </div>
@@ -136,12 +139,14 @@ Na demonstração a seguir, o random walker da esquerda está utilizando a funç
 <div class="example-player"
      data-example-title="Walker random"
      data-example-path="{{ config.site_url }}/examples/synthesis/3-walker-random"
+     data-height="240"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/C6E72bUrH">
 </div>
 
 <div class="example-player"
      data-example-title="Walker random"
      data-example-path="{{ config.site_url }}/examples/synthesis/4-walker-noise"
+     data-height="240"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/AzlhNz7gO">
 </div>
 
@@ -190,6 +195,7 @@ Os sketches a seguir demonstram a simulação de um ruído em duas dimensões. O
      data-example-title="Walker random"
      data-example-path="{{ config.site_url }}/examples/synthesis/5-tv-random"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/fc3CuxeHM"
+     data-height="400"
      >
 </div>
 
@@ -197,6 +203,7 @@ Os sketches a seguir demonstram a simulação de um ruído em duas dimensões. O
      data-example-title="Walker random"
      data-example-path="{{ config.site_url }}/examples/synthesis/6-tv-noise"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/s2FYUuyoe"
+     data-height="400"
      >
 </div>
 
@@ -249,6 +256,7 @@ O resultado é o sketch a seguir, que cria uma espécie de simulação de céu n
      data-example-title="Walker random"
      data-example-path="{{ config.site_url }}/examples/synthesis/7-tv-noise-time"
      data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/hYCo480ME"
+     data-height="400"
      >
 </div>
 
