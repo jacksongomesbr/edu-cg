@@ -45,6 +45,7 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+      use_pygments: true
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.magiclink:
@@ -62,14 +63,18 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
   - pymdownx.blocks.caption
+  - pymdownx.snippets:
+      base_path: docs/
+      check_paths: true
 
 extra_javascript:
   - assets/js/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-  - assets/js/example-player.js
+  - assets/js/sketch-runner-iframe.js
 
 extra_css:
   - assets/css/example-player.css
+  - assets/css/sketch-runner.css
 
 plugins:
   - search:
@@ -88,5 +93,14 @@ nav:
     - Fundamentos do Processing: 3-synthesis/fundamentals.md
     - Aleatoriedade: 3-synthesis/randomness/index.md
     - Vetores: 3-synthesis/vectors/index.md
+    - Transformações 2D:
+      - Introdução: 3-synthesis/transformations/index.md
+      - Translação: 3-synthesis/transformations/translation.md
+      - Rotação: 3-synthesis/transformations/rotation.md
+      - Escala: 3-synthesis/transformations/scaling.md
+      - Combinação de transformações: 3-synthesis/transformations/combined.md
+      - Matriz de transformação 2D: 3-synthesis/transformations/transformation-matrix.md
   - Matemática:
     - Trigonometria: 4-math/trigonometry/index.md
+    - Matrizes:
+      - Determinantes: 4-math/matrices/determinant.md

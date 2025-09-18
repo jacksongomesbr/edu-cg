@@ -1,74 +1,105 @@
 # Trigonometria
 
-**Trigonometria** é um assunto central em Computação Gráfica. Este capítulo apresenta coisas novas ou te ajuda a lembrar de conceitos importantes. Para começar, veja o diagrama a seguir.
+A **trigonometria** é fundamental em Computação Gráfica, pois permite descrever movimentos, rotações e posições de objetos no espaço. Este capítulo revisa conceitos essenciais e apresenta novas ideias importantes para aplicações gráficas.
 
+## O Dispositivo SOH-CAH-TOA
 
 <figure markdown="span">
      ![alt text](diagram-soh-cah-toa.png){width="400"}
-     <figcaption>Dispositivo soh-cah-toa</figcaption>
+     <figcaption>Dispositivo SOH-CAH-TOA</figcaption>
 </figure>
 
-A figura apresenta o dispositivo **soh-cah-toa**:
+O dispositivo **SOH-CAH-TOA** ajuda a lembrar as definições das funções trigonométricas em um triângulo retângulo:
 
-* **soh**: "seno igual a oposto sobre hipotenusa" (do inglês *sine opposite hipotenuse*)
-* **cah**: "cosseno igual a adjacente sobre hipotenusa" (do inglês *cosine adjacent hypotenuse*)
-* **toa**: "tangente igual a oposto sobre adjacente" (do inglês *tangent opposite adjacent*)
+- **SOH**: Seno é igual ao cateto Oposto sobre a Hipotenusa (*Sine = Opposite / Hypotenuse*)
+- **CAH**: Cosseno é igual ao cateto Adjacente sobre a Hipotenusa (*Cosine = Adjacent / Hypotenuse*)
+- **TOA**: Tangente é igual ao cateto Oposto sobre o Adjacente (*Tangent = Opposite / Adjacent*)
 
-Em termos matemáticos, temos as definições:
+Matematicamente, temos:
 
 $$
-\begin{split}
-    \sin \theta &= \frac{\mathrm{oposto}}{\mathrm{hipotenusa}} \\ \\
-    \cos \theta &= \frac{\mathrm{adjacente}}{\mathrm{hipotenusa}} \\ \\
-    \tan \theta &= \frac{\mathrm{oposto}}{\mathrm{adjacente}} \\ \\
+\begin{align}
+    \sin \theta &= \frac{\text{oposto}}{\text{hipotenusa}} \\[10pt]
+    \cos \theta &= \frac{\text{adjacente}}{\text{hipotenusa}} \\[10pt]
+    \tan \theta &= \frac{\text{oposto}}{\text{adjacente}} \\[10pt]
     \tan \theta &= \frac{\sin \theta}{\cos \theta}
-\end{split}
+\end{align}
 $$
 
-Outro modelo para representar essa informação é chamado de **círculo unitário** e é ilustrado pela figura a seguir.
+## O Círculo Unitário
 
 <figure markdown="span">
      ![alt text](diagram-unit-circle.png){width="500"}
      <figcaption>Círculo unitário</figcaption>
 </figure>
 
-O círculo unitário tem rario $r=1$. Neste caso, não é utilizado o sistema de coordenadas cartesianas (SCC), mas o **sistema de coordenadas polares** (SCP) no qual uma coordenada é definida por $(r, \theta)$ ao invés de $(x,y)$, como ocorre no SCC. Aqui:
+O **círculo unitário** é um círculo de raio $r = 1$ centrado na origem. Ele é uma ferramenta poderosa para visualizar e compreender as funções trigonométricas.
 
-* $r$ é o raio
-* $\theta$ é o ângulo de rotação
+No círculo unitário, usamos o **sistema de coordenadas polares** (SCP), onde um ponto é definido por $(r, \theta)$:
+- $r$ é o raio (distância até a origem)
+- $\theta$ é o ângulo em relação ao eixo $x$ positivo
 
-O início do sistema de coordenadas ($\theta=0$) está localizado do lado direito, na posição semelhante às 3 horas em um relógio e cresce no sentido anti-horário.
+O ângulo $\theta = 0$ está na direção do eixo $x$ positivo (posição das 3 horas em um relógio) e aumenta no sentido anti-horário.
 
-No diagrama da figura do círculo unitário o ponto $p(r,\theta)$ está localizado no grau $\frac{\pi}{4}$ (em radianos) ou $45$ (em graus). Perceba também os pontos de destaque:
+No diagrama acima, o ponto $p(r, \theta)$ está em $\theta = \frac{\pi}{4}$ radianos ($45^\circ$). Outros pontos importantes:
 
-* $\frac{1}{4}$ da circunferência está localizado em $\frac{\pi}{2}$
-* $\frac{1}{2}$ da circunferência está localizado em $\pi$
-* $\frac{3}{2}$ da circunferência está localizado em $\frac{3\pi}{2}$
+- $\frac{1}{4}$ da circunferência: $\theta = \frac{\pi}{2}$ ($90^\circ$)
+- $\frac{1}{2}$ da circunferência: $\theta = \pi$ ($180^\circ$)
+- $\frac{3}{4}$ da circunferência: $\theta = \frac{3\pi}{2}$ ($270^\circ$)
 
-No SCP os ângulos são medidos em radianos ao invés de graus. O comprimento do arco formado por $s$ é obtido por $r \times \theta$.
+No SCP, os ângulos são geralmente medidos em **radianos**. O comprimento do arco correspondente a um ângulo $\theta$ é dado por $s = r \times \theta$.
 
-É possível estabelecer relações entre as funções trigonométricas e o círculo unitário. Note que há um triângulo interno ao círculo unitário, formado a partir do ponto $p$. O raio $r$ é a hipotenusa desse triângulo. Para transformar o ponto $p$ do SCP para o SCC podem ser utilizadas as equações a seguir:
+## Relação com o Sistema Cartesiano
 
-$$
-\begin{align}
-    x &= \cos \theta \times r \\
-    y &= \sin \theta \times r
-\end{align}
-$$
-
-A p5.js fornece as funções para realizar transformações:
-
-* `cos(a)` retorna o cosseno do ângulo `a`
-* `sin(a)` retorna o seno do ângulo `a`
-* `radians(a)` converte o ângulo `a` de graus para radianos
-
-Essas transformações entre graus ($\alpha$) e radianos ($\theta$) também podem ser obtidas pelas equações:
+Dentro do círculo unitário, qualquer ponto na circunferência pode ser convertido para o **sistema de coordenadas cartesianas** (SCC) usando:
 
 $$
 \begin{align}
-    \theta &= \frac{\alpha \times r}{180} \quad \mathrm{ou} \quad 
-    \theta = \frac{2 \pi \alpha}{360} \\ \\
-    \alpha &= \frac{\theta \times 180}{\pi}
+    x &= r \cos \theta \\
+    y &= r \sin \theta
 \end{align}
 $$
 
+No círculo unitário ($r = 1$), isso se simplifica para:
+
+$$
+\begin{align}
+    x &= \cos \theta \\
+    y &= \sin \theta
+\end{align}
+$$
+
+Ou seja, para cada ângulo $\theta$, o cosseno fornece a coordenada $x$ e o seno fornece a coordenada $y$ do ponto correspondente na circunferência.
+
+## Graus e Radianos
+
+Em computação gráfica e matemática, é comum trabalhar com **radianos** porque eles simplificam fórmulas e cálculos. Um círculo completo tem $2\pi$ radianos, que equivalem a $360^\circ$.
+
+As conversões entre graus ($\alpha$) e radianos ($\theta$) são:
+
+$$
+\begin{align}
+    \theta &= \frac{\alpha \pi}{180} \\ \\
+    \alpha &= \frac{\theta \cdot 180}{\pi}
+\end{align}
+$$
+
+**Exemplo:**  
+
+$90^\circ = \frac{\pi}{2}$ radianos  
+$180^\circ = \pi$ radianos
+
+## Funções em p5.js
+
+A biblioteca p5.js oferece funções úteis para trabalhar com trigonometria:
+
+- `cos(a)`: retorna o cosseno do ângulo `a` (em radianos)
+- `sin(a)`: retorna o seno do ângulo `a` (em radianos)
+- `radians(a)`: converte o ângulo `a` de graus para radianos
+
+## Exercício Sugerido
+
+Desenhe um ponto no círculo unitário para $\theta = 60^\circ$.  
+1. Converta $60^\circ$ para radianos.  
+2. Calcule as coordenadas cartesianas $(x, y)$ desse ponto.  
+3. Represente graficamente no círculo unitário.

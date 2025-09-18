@@ -12,11 +12,15 @@ A figura indica que o movimento na direção Norte representa um decremento na c
 
 A partir disso, e reunindo os conceitos, podemos utilizar a função [`random()`](https://p5js.org/reference/p5/random/) com o parâmetro $4$ para retornar um número aleatório entre $0$ e $4-1$ e utilizá-lo em um condicional para realizar operações nas coordenadas x e y para criar um desenho que simula uma caminhada aleatória.
 
-<div class="example-player"
-     data-example-path="{{ config.site_url }}/examples/synthesis/0-random-walker/index.html"
+<div class="sketch-runner"
+     data-sketch-path="./demo-random-walker/sketch.js"
      data-example-title="Random Walker"
+     data-js-files="./demo-random-walker/Walker.js"
+     data-width="640"
      data-height="240"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/WahAyN1Zh">
+     data-title="Random Walker"
+     data-editor-url="https://editor.p5js.org/jacksongomes/sketches/WahAyN1Zh"
+     data-pause-at-beginning="false">
 </div>
 
 Uma parte importante do sketch responsável por gerar esse comportamento é definida pela classe `Walker`.
@@ -112,19 +116,24 @@ Para ilustrar essa característica, considere os exemplos a seguir.
 
 <div class="grid" markdown>
 
-<div class="example-player"
-     data-example-title="Surface random"
+<div class="sketch-runner"
+     data-sketch-path="./demo-surface-random.js"
+     data-width="360"
      data-height="240"
-     data-example-path="{{ config.site_url }}/examples/synthesis/1-surface-random"
-     data-p5-editor="https://editor.p5js.org/natureofcode/sketches/O7PsvcpQ3">
+     data-title="Random Walker"
+     data-editor-url="https://editor.p5js.org/natureofcode/sketches/O7PsvcpQ3"
+     data-pause-at-beginning="false">
 </div>
 
-<div class="example-player"
-     data-example-title="Surface noise"
+<div class="sketch-runner"
+     data-sketch-path="./demo-surface-noise.js"
+     data-width="360"
      data-height="240"
-     data-example-path="{{ config.site_url }}/examples/synthesis/2-surface-noise"
-     data-p5-editor="https://editor.p5js.org/natureofcode/sketches/UGJqLCZb_">
+     data-title="Surface noise"
+     data-editor-url="https://editor.p5js.org/natureofcode/sketches/UGJqLCZb_"
+     data-pause-at-beginning="false">
 </div>
+
 
 </div>
 
@@ -136,18 +145,22 @@ Na demonstração a seguir, o random walker da esquerda está utilizando a funç
 
 <div class="grid" markdown>
 
-<div class="example-player"
-     data-example-title="Walker random"
-     data-example-path="{{ config.site_url }}/examples/synthesis/3-walker-random"
+<div class="sketch-runner"
+     data-sketch-path="./demo-walker-random.js"
+     data-width="360"
      data-height="240"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/C6E72bUrH">
+     data-title="Walker random"
+     data-editor-url="https://editor.p5js.org/natureofcode/sketches/C6E72bUrH"
+     data-pause-at-beginning="false">
 </div>
 
-<div class="example-player"
-     data-example-title="Walker random"
-     data-example-path="{{ config.site_url }}/examples/synthesis/4-walker-noise"
+<div class="sketch-runner"
+     data-sketch-path="./demo-walker-noise.js"
+     data-width="360"
      data-height="240"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/AzlhNz7gO">
+     data-title="Walker random - noise"
+     data-editor-url="https://editor.p5js.org/jacksongomes/sketches/AzlhNz7gO"
+     data-pause-at-beginning="false">
 </div>
 
 </div>
@@ -191,20 +204,22 @@ Os sketches a seguir demonstram a simulação de um ruído em duas dimensões. O
 
 <div class="grid" markdown>
 
-<div class="example-player"
-     data-example-title="Walker random"
-     data-example-path="{{ config.site_url }}/examples/synthesis/5-tv-random"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/fc3CuxeHM"
+<div class="sketch-runner"
+     data-sketch-path="./demo-tv-noise-random.js"
+     data-width="400"
      data-height="400"
-     >
+     data-title="Walker random - noise"
+     data-editor-url="https://editor.p5js.org/jacksongomes/sketches/AzlhNz7gO"
+     data-pause-at-beginning="false">
 </div>
 
-<div class="example-player"
-     data-example-title="Walker random"
-     data-example-path="{{ config.site_url }}/examples/synthesis/6-tv-noise"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/s2FYUuyoe"
+<div class="sketch-runner"
+     data-sketch-path="./demo-tv-noise-perlin.js"
+     data-width="400"
      data-height="400"
-     >
+     data-title="Walker random - perlin noise"
+     data-editor-url="https://editor.p5js.org/jacksongomes/sketches/s2FYUuyoe"
+     data-pause-at-beginning="false">
 </div>
 
 </div>
@@ -252,11 +267,11 @@ De fato, há mais uma forma de utilizar a função `noise()`, que é passando tr
 
 O resultado é o sketch a seguir, que cria uma espécie de simulação de céu nublado em movimento.
 
-<div class="example-player"
-     data-example-title="Walker random"
-     data-example-path="{{ config.site_url }}/examples/synthesis/7-tv-noise-time"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/hYCo480ME"
+<div class="sketch-runner"
+     data-sketch-path="./demo-noise-animation.js"
+     data-width="400"
      data-height="400"
-     >
+     data-title="Noise animated"
+     data-editor-url="https://editor.p5js.org/jacksongomes/sketches/hYCo480ME"
+     data-pause-at-beginning="false">
 </div>
-

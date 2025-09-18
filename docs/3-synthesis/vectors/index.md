@@ -1,237 +1,673 @@
 # Vetores
 
-**Vetores** são muito utilizados em simulações e representam, neste material, uma das formas mais básicas da representação da física: uma esfera cai no chão, um planeta gira ao redor do sol etc. Vetores são fundamentais para a representação de movimentação, como uma alternativa mais adequada ao que utilizamos até o momento.
+**Vetores** são fundamentais em simulações e computação gráfica, pois representam grandezas físicas que possuem **magnitude** (tamanho) e **direção**. Exemplos clássicos incluem o movimento de uma esfera caindo, o giro de um planeta ao redor do sol, ou a direção de uma força. Diferentemente de **escalares** (como massa ou temperatura, que têm apenas valor), vetores descrevem deslocamentos, velocidades, forças e muitas outras grandezas essenciais para modelar o mundo físico.
 
-O **vetor Euclidiano** (ou **vetor geométrico**) é o tipo de vetor que estamos interessados. Ele representa uma entidade matemática que tem **magnitude** e **direção**. Geralmente, um vetor é desenhado como uma **seta**. Assim, a direção do vetor indica para onde ele está apontando e sua magnitude representa o comprimento da seta. Além disso, costumamos indicar que um vetor parte de um ponto `A` e vai até um ponto `B`.
+Por exemplo, dizer que um carro se move a 60 km/h é uma informação incompleta (escalar). Dizer que se move a 60 km/h para nordeste é uma informação completa (vetorial).
 
-Matematicamente, um vetor $\vec{v}$ é representado por $\vec{v}=(v_1, v_2)$ onde $v_1$ e $v_2$ são as componentes do vetor, associadas às coordenadas do sistema de coordenadas. Uma notação alternativa é utilizar $\mathbf{{v}}$ ao invés de $\vec{v}$. A figura a seguir ilustra a representação do vetor $\vec{v}$.
+## Aplicações em Computação Gráfica
+
+Vetores são usados para:
+
+- Descrever posições, velocidades e acelerações
+- Calcular direções de luz e normais de superfícies
+- Detectar colisões e calcular rebotes
+- Definir direções de câmeras e objetos em 3D
+
+## Exemplo: Bola quicando (sem vetores)
+
+Antes de nos aprofundarmos no entendimento dos vetores e suas aplicações em computação gráfica, veja primeiro o sketch que implementa a simulação da bola quicando dentro da caixa utilizando variáveis separadas para cada coordenada de posição e velocidade (sem vetores).
+
+<div class="sketch-runner"
+     data-sketch-path="./demo-ball-bouncing-without-vectors.js"
+     data-width="400"
+     data-height="400"
+     data-title="Bola quicando (sem vetores)"
+     data-pause-at-beginning="false">
+</div>
+
+O sketch adota duas variáveis para a posição (`cx` e `cy`) e duas para a velocidade (`vx` e `vy`). 
+
+```javascript title="Bola quicando (sem vetores): variáveis para posição e velocidade"
+--8<-- "3-synthesis/vectors/demo-ball-bouncing-without-vectors.js:1:6"
+```
+
+A cada frame, a posição é atualizada somando a velocidade, e quando a bola atinge uma borda, o sinal da velocidade correspondente é invertido para simular o rebote.
+
+```javascript title="Bola quicando (sem vetores): atualização da posição e detecção de colisão"
+--8<-- "3-synthesis/vectors/demo-ball-bouncing-without-vectors.js:12:31"
+```
+
+Quando ocorre colisão, invertemos o sinal da velocidade na direção correspondente. Em 3D, seriam necessárias três variáveis para cada propriedade, uma para cada coordenada (x, y, z).
+
+
+## Conceito e Representação
+
+O **vetor Euclidiano** (ou **vetor geométrico**) é o tipo de vetor que utilizamos neste material. Ele é representado matematicamente por suas componentes em cada dimensão do espaço. Em 2D, escrevemos $\vec{v} = (v_1, v_2)$ ou, associando diretamente às coordenadas, $\vec{v} = (v_x, v_y)$. Em 3D, teríamos $\vec{v} = (v_1, v_2, v_3)$ ou $\vec{v} = (v_x, v_y, v_z)$. A notação alternativa $\mathbf{v}$ também é comum.
+
+De forma geral, o vetor é representado matematicamente como:
+
+$$
+\begin{align}
+  \vec{v} = (v_1, v_2, \ldots, v_n)
+\end{align}
+$$
+
+onde $n$ é a dimensão do espaço (2D, 3D, etc.) e $v_i$ são as componentes do vetor.
+
+Um vetor pode ser visualizado como uma **seta**: a direção indica para onde aponta, e a magnitude (ou **norma**) é o comprimento da seta. Frequentemente, dizemos que um vetor parte de um ponto $A$ e chega a um ponto $B$, mas em computação gráfica, normalmente consideramos vetores a partir da origem.
 
 <figure markdown="span">
      ![alt text](vectors-vector.png){width="300"}
-     <figcaption>Vetor Euclideano</figcaption>
+     <figcaption>Representação visual de um vetor Euclidiano mostrando magnitude (comprimento da seta) e direção (orientação da seta)</figcaption>
 </figure>
 
-!!! note "Representações alternativas de vetores"
+Pense em um vetor como instruções para caminhar de um ponto a outro:  
 
-    Você também pode encontrar o vetor sendo representado como $\vec{v}=(v_x, v_y)$, associando-se diretamente às coordenadas do sistema de coordenadas. A quantidade de dimensões do vetor está diretamente relacionada à quantidade das suas componentes.
-
-A magnitude, ou **norma** do vetor, é dada pela equação a seguir.
-
-$$
-\Vert\vec{v}\Vert = \sqrt{v_1^2 + v_2^2}
-$$
-
-A figura a seguir ilustra essa estrutura do vetor utilizando uma representação alternativa.
-
-<figure markdown="span">
-     ![alt text](vectors-norm.png){width="350"}
-     <figcaption>Norma ou magnitude do vetor</figcaption>
-</figure>
-
-Perceba que a norma é calculada utilizando o teorema de Pitágoras: a hipotenusa ($h$) é igual à raiz quadrada da soma dos catetos ($a$ e $b$) ou o quadrado da hipotenusa é igual à soma dos quadrados dos catetos.
-
-
-## Bola quicando -- sem vetores
-
-O sketch a seguir demonstra como simular uma bola em movimento dentro de uma caixa. A bola bate em uma das extremidades da caixa e então move-se na direção oposta.
-
-<div class="example-player"
-     data-example-title="Bouncing Ball Without Vectors"
-     data-example-path="{{ config.site_url }}/examples/synthesis/11-vectors-bouncing-no-vectors"
-     data-height="400"
-     data-width="400"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/uR8CBJVUU">
-</div>
-
-O sketch implementa a simulação do movimento da bola utilizando duas propriedades importantes:
-
-* posição (centro da bola): variáveis `cx` e `cy`
-* velocidade: variáveis `vx` e `vy`
-
-Quando ocorre colisão, a velocidade muda de sinal:
-
-* se `cx > width || cx < 0` então usa `-vx`
-* se `cy > height || cy < 0` então usa `-vy`
-
-Em um cenário mais elaborado, outras propriedades poderiam ser simuladas, como aceleração, vento e fricção.
-
-Para cada conceito do mundo da simulação (vento, aceleração, fricção) há duas variáveis, uma para cada coordenada, pois o mundo é 2D. Em um mundo 3D, teríamos três variáveis e assim por diante. E se pudéssemos reduzir essas variáveis ou representá-las de outra forma?
-
-
-## Vetores na p5.js
-
-Pense em um vetor como a diferença entre dois pontos, ou instruções para caminhar de um ponto para outro.
+- `(3, 5)`: caminhe 3 unidades para o leste e 5 para o norte.  
+- `(-3, 5)`: caminhe 3 para o oeste e 5 para o norte.  
+- `(10, -5)`: caminhe 10 para o leste e 5 para o sul.
 
 <figure markdown="span">
      ![alt text](vectors-walking.png){width="500"}
-     <figcaption>Vetores em computação gráfica e na p5.js</figcaption>
+     <figcaption>Analogia de vetores como instruções de caminhada: cada vetor indica direção e distância a percorrer no plano cartesiano</figcaption>
 </figure>
 
-Os vetores da figura podem significar:
+A **magnitude** (ou norma) de um vetor é calculada pelo Teorema de Pitágoras:
 
-* `(+3. +5)`: caminhe três passos para o (l)este, depois cinco passos para o note.
-* `(-3, +5)`: caminhe três passos para o oeste, depois cinco passos para o norte
-* `(10, -5)`: caminhe dez passos para o (l)este, depois cinco passos para o sul.
+**Para 2D:**
 
-Revisitando a programação de movimento, você viu que cada frame da animação permite mudar a posição do objeto, avançando uma certa quantidade de pixels. Essa instrução "vá para a nova posição" é, essencialmente, um vetor, ela tem magnitude (qual a distância da mudança de posição?) e direção (para onde?).
+$$
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{v_1^2 + v_2^2}
+\end{align}
+$$
+
+**Para 3D:**
+
+$$
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{v_1^2 + v_2^2 + v_3^2}
+\end{align}
+$$
+
+**Para n dimensões:**
+
+$$
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{\sum_{i=1}^{n} v_i^2}
+\end{align}
+$$
+
+A figura a seguir ilustra a relação entre o cálculo da norma e o Teorema de Pitágoras (cálculo da hipotenusa do triângulo retângulo).
 
 <figure markdown="span">
-     ![alt text](vectors-position-speed.png){width="500"}
-     <figcaption>Posição e velocidade</figcaption>
+     ![alt text](vectors-norm.png){width="330"}
+     <figcaption>Cálculo da norma (magnitude) do vetor usando o Teorema de Pitágoras - a hipotenusa do triângulo retângulo formado pelas componentes</figcaption>
 </figure>
 
-O vetor determina a **velocidade** de um objeto, definida como a razão da mudança da posição do objeto em relação ao tempo, ou seja, determina para onde vai o objeto em cada frame da animação. Isso representa nossa noção mais básica da animação de movimento: *a nova posição é igual ao resultado de aplicar velocidade à posição atual*.
 
-Na computação gráfica, vetores partem sempre da origem, `(0,0)` em um plano 2D. Assim, não precisamos representar o vetor como tendo dois pontos, mas apenas um ponto. A magnitude será obtida a partir da distância do ponto do vetor à origem do sistema de coordenadas.
+## Vetores em p5.js
 
-Em p5.js a classe `p5.Vector` e a função `createVector(x,y)` permitem criar vetores. Exemplos:
+Na biblioteca p5.js, a classe `p5.Vector` e a função `createVector(x, y)` facilitam a criação e manipulação de vetores:
 
 ```javascript
 let position = createVector(100, 100);
 let velocity = createVector(1, 3.3);
 ```
 
-Mas isso é apenas a representação do vetor. Para representar movimento, precisamos atualizar a posição atual. Na prática, seria fazer isso:
+A seguir, um exemplo de implementação do sketch da bola quicando dentro de uma caixa, utilizando vetores para representar a posição e a velocidade da bola.
 
-```
-position = position + velocity;
-```
+### Exemplo: Bola quicando (com vetores)
 
-Entretanto, na p5.js não podemos fazer isso. Então, vamos aprender melhor sobre soma de vetores.
-
-
-## Adição de vetores
-
-Matematicamente, podemos representar adição de vetores de duas formas:
-
-* somar o vetores $\vec{u}$ e $\vec{v}$, resultando no vetor $\vec{w} = \vec{u} + \vec{v}$
-* somar o vetor $\vec{v}$ e o escalar $x$, resultando no vetor $\vec{w} = \vec{v} + x$
-
-Exemplos: para $\vec{u} = (5, 2)$ e $\vec{v} = (3, 4)$ e $x = 2$, temos:
-
-* $\vec{w} = \vec{u} + \vec{v} = (5, 2) + (3, 4) = (8, 6)$
-* $\vec{w} = \vec{u} + x = (5, 2) + 2 = (7, 4)$
-* $\vec{w} = \vec{v} + x = (3, 4) + 2 = (5, 6)$
-
-Em outras palavras, podemos criar o vetor $\vec{w} = \vec{u} + \vec{v}$ resultante das somas das componentes dos vetores:
-
-$$
-\begin{align}
-     w_1 &= u_1 + v_1 \\
-     w_2 &= u_2 + v_2
-\end{align}
-$$
-
-A figura a seguir ilustra esse processo.
-
-<figure markdown="span">
-     ![alt text](vectors-addition.png){width="500"}
-     <figcaption>Adição de vetores</figcaption>
-</figure>
-
-Perceba um aspecto importante da adição de vetores: a adição dos vetores $\vec{u}$ e $\vec{v}$ pode ser representada pelo reposicionamento da origem do vetor $\vec{v}$ na própria coordenada do vetor $\vec{u}$.
-
-Na p5.js podemos representar a adição acessando as componentes dos vetores.
+Ao usar vetores, agrupamos as propriedades relacionadas:
 
 ```javascript
-position.x = position.x + velocity.x;
-position.y = position.y + velocity.y;
+let position = createVector(100, 100);
+let velocity = createVector(2, 3);
 ```
 
-Ainda, outra forma é utilizar o método `add()`:
+A atualização da posição é feita somando o vetor de velocidade ao vetor de posição:
 
 ```javascript
 position.add(velocity);
 ```
 
-O sketch a seguir implementa a movimentação da bola utilizando vetores para posição e velocidade.
-
-
-<div class="example-player"
-     data-example-title="Bouncing Ball With Vectors"
-     data-example-path="{{ config.site_url }}/examples/synthesis/12-vectors-bouncing-ball"
-     data-height="400"
-     data-width="400"
-     data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/TUCbXobFK">
-</div>
-
-A seguir, um trecho do sketch mostra a criação e a atualização dos vetores na função `draw()`.
-
-```javascript
-let position; // posição
-let speed; // velocidade
-
-function draw() {
-  background(220);
-
-  // define posição futura 
-  let x = position.x + speed.x;
-  let y = position.y + speed.y;
-
-  // checa colisão e altera velocidade, se for o caso
-  if (x + r > width || x - r < 0) {
-    speed.x = -speed.x;
-  }
-  if (y + r > height || y - r < 0) {
-    speed.y = -speed.y;
-  }
-
-  // atualiza posição
-  position.x = x;
-  position.y = y;
-
-  // Desenha a bola
-  drawBall(position.x, position.y, d);
-}
-```
-
-Perceba que a adição de vetores é tratada da forma como vimos anteriormente, ou seja:
-
-```javascript
-position.x = position.x + speed.x;
-position.y = position.y + speed.y;
-```
-
-A figura a seguir ilustra as mudanças de posição a partir das adições sucessivas.
-
-
+A figura a seguir ilustra a relação entre o vetor posição (localização atual) e o vetor velocidade (direção e velocidade do movimento).
 
 <figure markdown="span">
-     ![alt text](vectors-addition-sequence.png){width="500"}
-     <figcaption>Mudanças de posição após sucessivas adições de vetores</figcaption>
+     ![alt text](vectors-position-speed.png){width="500"}
+     <figcaption>Relação entre vetor posição (localização atual) e vetor velocidade (direção e velocidade do movimento)</figcaption>
 </figure>
 
+A figura indica que o vetor "posição", ao ser atualizado pela soma com o vetor "velocidade", resulta em um novo vetor posição, deslocado na direção e magnitude da velocidade (na prática, movendo-se x passos na horizontal e y passos na vertical).
 
-A figura mostra que o vetor $\vec{p}$ é alterado sequencialmente a partir de adições com o vetor $\vec{v}$, representando a animação de movimentação do desenho associado à posição. Note, por fim, que o vetor $\vec{p}$ sempre parte da origem, independemtente das adições com o vetor $\vec{v}$.
+No sketch, a cada frame, a posição é atualizada pela velocidade, representando o movimento do objeto.
 
+!!! note "Terminologia"
 
-## Outras operações com vetores
+    Utilizamos "velocity" (velocidade) para nos referir ao vetor que representa tanto a direção quanto a velocidade do movimento. Em alguns contextos, "velocity" refere-se apenas à magnitude da velocidade.
 
-Além da adição de vetores, outras operações permitem definir uma aritmética de vetores.
+Na sequência, veremos mais detalhes sobre as operações que podem ser realizadas com vetores.
 
-A subtração de vetores, representada por $\vec{w} = \vec{u} - \vec{v}$ pode ser obtida na p5.js pelo método `sub()` ou pelo método `p5.Vector.sub()`.
+## Operações com Vetores
 
-Utilizando conceitos da álgebra, podemos afirmar que as igualdades são verdadeiras:
+### Adição
+
+A soma de dois vetores resulta em um novo vetor, somando-se componente a componente:
 
 $$
 \begin{align}
-     \vec{w} &= \vec{u} - \vec{v} \\
-     \vec{w} &= \vec{u} + -\vec{v}
+  \vec{w} = \vec{u} + \vec{v} = (u_1 + v_1,\, u_2 + v_2)
 \end{align}
 $$
 
-Ou seja:
+Exemplo:
 
-1. é possível representar $\vec{v}$ de forma negativa, invertendo o sinal das suas componentes. Então $-\vec{v} = (-v_1, -v_2)$
-2. a subtração é equivalente à adição entre um vetor positivo $\vec{u}$ e o inverso (negativo) do vetor $\vec{v}$. 
+- $\vec{u} = (5, 2)$
+- $\vec{v} = (3, 4)$
+- $\vec{w} = (5, 2) + (3, 4) = (8, 6)$
 
-Isso faz com possamos ilustrar a subtração de vetores de forma semelhante à adição, como mostra a figura a seguir.
+
+<figure markdown="span">
+     ![alt text](vectors-addition.png){width="500"}
+     <figcaption>Adição de vetores usando a regra do paralelogramo - o vetor resultante é a diagonal que conecta a origem ao vértice oposto</figcaption>
+</figure>
+
+### Subtração
+
+A subtração de vetores é feita componente a componente:
+
+$$
+\begin{align}
+  \vec{w} = \vec{u} - \vec{v} = (u_1 - v_1,\, u_2 - v_2)
+\end{align}
+$$
+
+Ou, de forma equivalente, somando o vetor negativo:
+
+$$
+\begin{align}
+  \vec{w} = \vec{u} + (-\vec{v})
+\end{align}
+$$
+
+Quando temos dois vetores $\vec{u}$ e
+$\vec{v}$, a subtração vetorial $\vec{v} - \vec{u}$
+produz um vetor que aponta de $\vec{u}$ para
+$\vec{v}$ (**perceba a ordem na subtração**). A magnitude (ou norma) deste vetor de
+diferença é exatamente a distância euclidiana entre
+os dois pontos.
 
 <figure markdown="span">
      ![alt text](vectors-subtraction.png){width="500"}
-     <figcaption>Esquema de subtração de vetores</figcaption>
+     <figcaption>Subtração de vetores: o resultado aponta do extremo do segundo vetor para o extremo do primeiro, indicando a diferença entre eles</figcaption>
 </figure>
 
-Veja o sketch a seguir para uma demonstração da subtração de vetores: <https://editor.p5js.org/jacksongomes/sketches/E4pOSKjxa>.
+O skecth a seguir ilustra este conceito.
 
-Algo interessante ocorre nesse sketch sobre onde se encontra o vetor `difference`: ele é reposicionado, ou seja, sua origem não é o `(0,0)`, mas `(position.x, position.y)`, ou seja, sua origem é o vetor `position`. Isso gera um resultado diferente do que vimos até o momento, já que todos os vetores partiam da origem do sistema de coordenadas.
+<div class="sketch-runner"
+     data-sketch-path="./demo-vector-subtraction-scheme.js"
+     data-width="700"
+     data-height="500"
+     data-title="Diferença entre Vetores"
+     data-pause-at-beginning="false">
+</div>
+
+
+
+Em p5.js podemos calcular a diferença entre dois vetores usando o método `sub()` ou a função estática `p5.Vector.sub()`:
+
+```javascript
+let difference = p5.Vector.sub(v, u);
+```
+
+O vetor `difference` resultante aponta de $\vec{u}$ para $\vec{v}$.
+
+**Interpretação Geométrica**
+
+O vetor diferença $\vec{v} - \vec{u}$ representa:
+
+1. **Direção**: De $\vec{u}$ para $\vec{v}$
+2. **Sentido**: Apontando para $\vec{v}$
+3. **Magnitude**: A distância euclidiana entre $\vec{u}$ e $\vec{v}$
+
+Veja o sketch a seguir, onde uma bola aponta na direção do mouse. O vetor diferença entre o vetor do mouse e o vetor da bola é calculado para determinar o vetor direção ($\vec{mouse} - \vec{ball}$).
+
+<div class="sketch-runner"
+     data-sketch-path="./demo-vector-subtraction-ball-static-mouse.js"
+     data-width="400"
+     data-height="400"
+     data-title="Diferença entre Vetores"
+     data-pause-at-beginning="false">
+</div>
+
+### Multiplicação por Escalar
+
+Multiplicar um vetor por um número real (escalar) altera sua magnitude, mantendo a direção:
+
+$$
+\begin{align}
+  a \cdot \vec{v} = (a \cdot v_1,\, a \cdot v_2)
+\end{align}
+$$
+
+A magnitude do vetor resultante é:
+
+$$
+\Vert a \cdot \vec{v} \Vert = |a| \cdot \Vert \vec{v} \Vert
+$$
+
+De outra forma, a multiplicação por escalar estica ou encolhe o vetor:
+
+- Se $|a| > 1$, o vetor é esticado (aumenta a magnitude)
+- Se $0 < |a| < 1$, o vetor é encolhido (diminui a magnitude)
+- Se $a < 0$, o vetor é invertido (aponta na direção oposta)
+
+Em p5.js podemos multiplicar um vetor por um escalar usando o método `mult()`:
+
+```javascript
+velocity.mult(2); // dobra a velocidade
+```
+
+### Normalização
+
+Um **vetor unitário** tem magnitude igual a 1. Para normalizar um vetor $\vec{v}$ (ou seja, convertê-lo em um vetor unitário), dividimos cada componente pela magnitude do vetor:
+
+$$
+\begin{align}
+  \vec{u} = \frac{\vec{v}}{\Vert\vec{v}\Vert}
+\end{align}
+$$
+
+!!! note "Normalização"
+
+    A normalização é útil para garantir que um vetor tenha magnitude 1, mantendo sua direção. Isso é especialmente importante em computação gráfica e física, onde vetores unitários são frequentemente usados para representar direções.
+
+
+Em p5.js podemos normalizar um vetor usando o método `normalize()`:
+
+```javascript
+velocity.normalize();
+```
+
+### Produto Escalar (*Dot Product*)
+
+O **produto escalar** é uma das operações mais úteis e versáteis com vetores. Ele mede o quanto dois vetores apontam na mesma direção e tem múltiplas interpretações geométricas.
+
+**Fórmula matemática**
+
+$$
+\begin{align}
+  \vec{a} \cdot \vec{b} = a_1 b_1 + a_2 b_2
+\end{align}
+$$
+
+**Interpretação geométrica**
+
+$$
+\begin{align}
+  \vec{a} \cdot \vec{b} = \Vert\vec{a}\Vert \Vert\vec{b}\Vert \cos(\theta)
+\end{align}
+$$
+
+onde $\theta$ é o ângulo entre os vetores.
+
+**Interpretações práticas**
+
+1. **Direção relativa**:
+    1. Se $\vec{a} \cdot \vec{b} > 0$: vetores apontam na mesma direção geral (ângulo < 90°)
+    2. Se $\vec{a} \cdot \vec{b} = 0$: vetores são perpendiculares (ângulo = 90°)
+    3. Se $\vec{a} \cdot \vec{b} < 0$: vetores apontam em direções opostas (ângulo > 90°)
+
+2. **Projeção**: O produto escalar de $\vec{a}$ com um vetor unitário $\hat{u}$ dá a magnitude da projeção de $\vec{a}$ na direção de $\hat{u}$, ou seja: $\text{projeção} = \vec{a} \cdot \hat{u}$
+
+3. **Similaridade**: Vetores normalizados com produto escalar próximo de $1$ são muito similares; próximo de $-1$ são opostos.
+
+Em p5.js podemos calcular o produto escalar usando o método `dot()` ou a função estática `p5.Vector.dot()`:
+
+```javascript
+let a = createVector(3, 4);
+let b = createVector(2, 1);
+let dot = p5.Vector.dot(a, b);
+
+// Interpretação do resultado
+if (dot > 0) {
+  console.log("Vetores apontam na mesma direção geral");
+} else if (dot < 0) {
+  console.log("Vetores apontam em direções opostas");
+} else {
+  console.log("Vetores são perpendiculares");
+}
+```
+
+**Casos práticos:**
+
+- **Detecção de colisão**: Verificar se um objeto está se movendo em direção a outro
+- **Iluminação**: Calcular intensidade da luz baseada no ângulo com a normal da superfície
+- **Campo de visão**: Determinar se um objeto está dentro do cone de visão
+- **Física**: Calcular trabalho realizado por uma força ($W = \vec{F} \cdot \vec{d}$)
+
+
+### Produto Vetorial (*Cross Product*)
+
+O **produto vetorial** é uma operação fundamental em 3D que produz um vetor perpendicular aos dois vetores originais. Diferente do produto escalar que resulta em um número, o produto vetorial gera um novo vetor.
+
+**Fórmula matemática para 3D:**
+
+$$
+\begin{align}
+\vec{a} \times \vec{b} = (a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1)
+\end{align}
+$$
+
+O produto vetorial entre dois vetores tridimensionais $\vec{a}$ e $\vec{b}$ resulta em um novo vetor $\vec{a} \times \vec{b}$ perpendicular ao plano formado por eles. A equação  mostra como calcular cada componente desse vetor resultante: o primeiro elemento corresponde à diferença entre o produto do segundo componente de $\vec{a}$ pelo terceiro de $\vec{b}$ e o produto do terceiro de $\vec{a}$ pelo segundo de $\vec{b}$, e assim por diante para os outros componentes.
+
+!!! note "Determinante"
+
+    O produto vetorial pode ser representado como o determinante de uma matriz 3x3:
+
+    $$
+    \vec{a} \times \vec{b} = \begin{vmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    a_1 & a_2 & a_3 \\
+    b_1 & b_2 & b_3
+    \end{vmatrix}
+    $$
+
+    onde $\hat{i}$, $\hat{j}$ e $\hat{k}$ são os vetores unitários nas direções x, y e z, respectivamente.
+
+    Assim, o determinante fornece uma forma compacta e sistemática de calcular o vetor perpendicular aos dois vetores originais.
+
+**Exemplo Numérico: Produto Vetorial**
+
+Considere os vetores $\vec{a} = (2, 3, 4)$ e $\vec{b} = (5, 6, 7)$. Vamos calcular o produto vetorial $\vec{a} \times \vec{b}$ passo-a-passo:
+
+Pela fórmula:
+
+$$
+\vec{a} \times \vec{b} = (a_2 b_3 - a_3 b_2,\;\; a_3 b_1 - a_1 b_3,\;\; a_1 b_2 - a_2 b_1)
+$$
+
+Substituindo os valores:
+
+- Primeira componente (x): $3 \times 7 - 4 \times 6 = 21 - 24 = -3$
+- Segunda componente (y): $4 \times 5 - 2 \times 7 = 20 - 14 = 6$
+- Terceira componente (z): $2 \times 6 - 3 \times 5 = 12 - 15 = -3$
+
+Portanto,
+
+$$
+\vec{a} \times \vec{b} = (-3,\; 6,\; -3)
+$$
+
+**Interpretação:**
+
+- O vetor resultante é perpendicular aos vetores $\vec{a}$ e $\vec{b}$.
+- Sua direção segue a regra da mão direita.
+- Sua magnitude corresponde à área do paralelogramo formado por $\vec{a}$ e $\vec{b}$.
+
+
+**Interpretação geométrica**:
+
+$$
+\begin{align}
+\|\vec{a} \times \vec{b}\| = \|\vec{a}\| \|\vec{b}\| \sin(\theta)
+\end{align}
+$$
+
+onde $\theta$ é o ângulo entre os vetores.
+
+**Propriedades importantes**:
+
+1. **Direção**: O vetor resultante é perpendicular aos dois vetores originais
+2. **Magnitude**: Igual à área do paralelogramo formado pelos vetores
+3. **Regra da mão direita**: Determina a direção do vetor resultante
+4. **Anti-comutatividade**: $\vec{a} \times \vec{b} = -(\vec{b} \times \vec{a})$
+5. **Vetor nulo**: Se $\vec{a} \parallel \vec{b}$, então $\vec{a} \times \vec{b} = \vec{0}$
+
+Em p5.js podemos calcular o produto vetorial usando a função estática `p5.Vector.cross()`:
+
+```javascript
+let a = createVector(1, 2, 3);
+let b = createVector(4, 5, 6);
+let cross = p5.Vector.cross(a, b);
+
+// Resultado: Vetor perpendicular aos vetores a e b
+```
+
+**Para vetores 2D (tratados como 3D com z=0):**
+
+```javascript
+let a = createVector(3, 4);  // Automaticamente (3, 4, 0)
+let b = createVector(1, 2);  // Automaticamente (1, 2, 0)
+let cross = p5.Vector.cross(a, b);
+
+// Resultado: (0, 0, 2) - aponta para fora da tela (z=2)
+```
+
+**Casos práticos:**
+
+1. **Cálculo de normais**: Determinar a normal de uma superfície a partir de dois vetores tangentes
+2. **Rotação e orientação**: Verificar se uma rotação é horária ou anti-horária
+3. **Área de triângulos/paralelogramos**: $\text{Área} = \frac{1}{2}\|\vec{a} \times \vec{b}\|$
+4. **Torque em física**: $\vec{\tau} = \vec{r} \times \vec{F}$
+5. **Detecção de lado**: Verificar de que lado de uma linha um ponto está
+
+**Interpretação do resultado:**
+
+- **Magnitude grande**: Vetores são quase perpendiculares
+- **Magnitude pequena**: Vetores são quase paralelos
+- **Magnitude zero**: Vetores são paralelos ou anti-paralelos
+- **Direção**: Perpendicular ao plano formado pelos dois vetores
+
+!!! warning "Limitação em 2D"
+    Em 2D, o produto vetorial não existe geometricamente. Em p5.js, vetores 2D são tratados como 3D com z = 0, resultando em um vetor que aponta para dentro ou fora da tela.
+
+!!! tip "Regra da Mão Direita"
+    Para determinar a direção de $\vec{a} \times \vec{b}$: aponte os dedos da mão direita na direção de $\vec{a}$, curve-os em direção a $\vec{b}$, e o polegar indicará a direção do produto vetorial.
+
+
+## Resumo das Operações
+
+| Operação         | Fórmula                              | p5.js                      |
+|------------------|--------------------------------------|----------------------------|
+| Soma             | $\vec{u} + \vec{v}$                  | `u.add(v)`                 |
+| Subtração        | $\vec{u} - \vec{v}$                  | `u.sub(v)`                 |
+| Multiplicação    | $a \cdot \vec{v}$                    | `v.mult(a)`                |
+| Normalização     | $\vec{v} / \Vert\vec{v}\Vert$        | `v.normalize()`            |
+| Produto escalar  | $\vec{u} \cdot \vec{v}$              | `p5.Vector.dot(u, v)`      |
+| Produto vetorial | $\vec{u} \times \vec{v}$ (3D)        | `p5.Vector.cross(u, v)`    |
+
+
+## Ângulo entre Vetores
+
+O ângulo entre dois vetores pode ser calculado usando o produto escalar:
+
+$$
+\begin{align}
+  \cos(\theta) = \frac{\vec{a} \cdot \vec{b}}{\Vert\vec{a}\Vert \Vert\vec{b}\Vert}
+\end{align}
+$$
+
+Portanto:
+
+$$
+\begin{align}
+\theta = \arccos\left(\frac{\vec{a} \cdot \vec{b}}{\Vert\vec{a}\Vert \Vert\vec{b}\Vert}\right)
+\end{align}
+$$
+
+Em p5.js:
+
+```javascript
+let angle = p5.Vector.angleBetween(a, b);
+```
+
+**Casos especiais:**
+
+- Se $\theta = 0°$: vetores apontam na mesma direção
+- Se $\theta = 90°$: vetores são perpendiculares
+- Se $\theta = 180°$: vetores apontam em direções opostas
+
+Podemos utilizar essa informação para, dentre outras aplicações:
+
+- Determinar se um objeto está dentro do campo de visão
+- Calcular reflexões e refrações
+- Ajustar orientações de câmeras e luzes
+
+
+## Métodos Estáticos vs. Métodos de Instância
+
+Em p5.js, há duas formas de trabalhar com vetores:
+
+### Métodos de Instância (modificam o vetor original)
+```javascript
+let v = createVector(3, 4);
+v.add(createVector(1, 2)); // v agora é (4, 6)
+v.mult(2); // v agora é (8, 12)
+```
+
+### Métodos Estáticos (criam novos vetores)
+```javascript
+let a = createVector(3, 4);
+let b = createVector(1, 2);
+let result = p5.Vector.add(a, b); // a e b não são modificados
+```
+
+**Quando usar cada um:**
+
+- **Métodos de instância**: quando você quer modificar o vetor original (ex: atualizar posição)
+- **Métodos estáticos**: quando você quer preservar os vetores originais (ex: cálculos temporários)
+
+
+Os sketches a seguir ilustram a utilização dos recursos vistos neste capítulo.
+
+
+<div class="grid" markdown>
+
+<div class="sketch-runner"
+     data-sketch-path="./demo-vector-ball-chasing-mouse.js"
+     data-width="400"
+     data-height="400"
+     data-title="Bola perseguindo o mouse (com vetores)"
+     data-pause-at-beginning="false">
+</div>
+
+
+<div class="sketch-runner"
+     data-sketch-path="./demo-vector-car-chasing-mouse.js"
+     data-width="400"
+     data-height="400"
+     data-title="Carro perseguindo o mouse (com vetores)"
+     data-pause-at-beginning="false">
+</div>
+
+</div>
+
+
+## Erros Comuns
+
+**1. Mutação Acidental de Vetores**
+
+```javascript
+// ❌ ERRO: modifica o vetor original
+let a = createVector(3, 4);
+let b = a; // b é uma referência a a
+b.add(createVector(1, 1)); // modifica tanto a quanto b!
+
+// ✅ CORRETO: cria uma cópia
+let a = createVector(3, 4);
+let b = a.copy(); // b é uma cópia independente
+b.add(createVector(1, 1)); // só modifica b
+```
+
+**2. Divisão por Zero na Normalização**
+
+```javascript
+// ❌ ERRO: pode causar NaN se magnitude for zero
+let v = createVector(0, 0);
+v.normalize(); // Retorna (NaN, NaN)
+
+// ✅ CORRETO: verifica antes de normalizar
+let v = createVector(0, 0);
+if (v.mag() > 0) {
+  v.normalize();
+}
+```
+
+**3. Confundir Métodos Estáticos e de Instância**
+
+```javascript
+// ❌ ERRO: mistura sintaxes
+let a = createVector(1, 2);
+let b = createVector(3, 4);
+let result = a.add(b, a); // add() de instância não aceita dois parâmetros
+
+// ✅ CORRETO: use métodos estáticos para múltiplos vetores
+let result = p5.Vector.add(a, b);
+```
+
+**4. Não Considerar a Ordem na Subtração**
+
+```javascript
+// A subtração de vetores não é comutativa!
+let a = createVector(5, 3);
+let b = createVector(2, 1);
+
+let result1 = p5.Vector.sub(a, b); // (3, 2)
+let result2 = p5.Vector.sub(b, a); // (-3, -2) - diferente!
+```
+
+## Exercícios Práticos
+
+**Exercício 1: Seguidor de Mouse**
+
+Crie um objeto que se move suavemente em direção ao mouse usando vetores.
+
+**Dicas:**
+
+- Use `createVector(mouseX, mouseY)` para a posição do mouse
+- Calcule a direção com subtração de vetores
+- Use normalização e multiplicação para controlar a velocidade
+
+
+**Exercício 2: Sistema de Partículas**
+
+Implemente um sistema onde múltiplas partículas se movem com velocidades aleatórias e quicam nas bordas.
+
+**Requisitos:**
+
+- Array de objetos com posição e velocidade vetoriais
+- Detecção de colisão com bordas
+- Diferentes tamanhos e cores para cada partícula
+
+
+**Exercício 3: Força Gravitacional**
+
+Simule dois objetos que se atraem mutuamente usando a fórmula da gravitação.
+
+**Fórmula:** $F = G \frac{m_1 m_2}{r^2}$
+
+**Dicas:**
+
+- Calcule a distância entre objetos
+- Use a direção normalizada para aplicar a força
+- Aplique a terceira lei de Newton (ação e reação)
+
+
+**Exercício 4: Campo de Forças**
+
+Crie um campo onde partículas são influenciadas por forças que variam conforme a posição.
+
+**Ideias:**
+
+- Vento que sopra horizontalmente
+- Atração/repulsão radial a partir do centro
+- Turbulência usando ruído de Perlin
+
+
+!!! tip "Recursos Adicionais"
+    - [Documentação oficial do p5.Vector](https://p5js.org/reference/#/p5.Vector)
+    - [The Nature of Code - Vectors](https://natureofcode.com/vectors/)
+    - [Linear Algebra Khan Academy](https://www.khanacademy.org/math/linear-algebra)
+
