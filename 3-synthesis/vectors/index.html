@@ -1,0 +1,1821 @@
+<!DOCTYPE html><html lang="pt" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Conteúdo interativo sobre conceitos e ferramentas para geração e processamento de imagem">
+      
+      
+        <meta name="author" content="Jackson Souza">
+      
+      
+        <link rel="canonical" href="https://jacksongomesbr.github.io/edu-cg/3-synthesis/vectors/">
+      
+      
+        <link rel="prev" href="../randomness/">
+      
+      
+        <link rel="next" href="../transformations/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Vetores - Computação Gráfica</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/example-player.css">
+    
+      <link rel="stylesheet" href="../../assets/css/sketch-runner.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vetores" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Computação Gráfica" class="md-header__button md-logo" aria-label="Computação Gráfica" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Computação Gráfica
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Vetores
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Compartilhar" aria-label="Compartilhar" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jacksongomesbr/edu-cg" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksongomesbr/edu-cg
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../0-course/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Curso
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../1-computacao-grafica/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Computação Gráfica
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../2-digital-imaging/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Imagem Digital
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Síntese
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../4-math/trigonometry/" class="md-tabs__link">
+          
+  
+  
+  Matemática
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Computação Gráfica" class="md-nav__button md-logo" aria-label="Computação Gráfica" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Computação Gráfica
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jacksongomesbr/edu-cg" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksongomesbr/edu-cg
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../0-course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Curso
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-computacao-grafica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Computação Gráfica
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2-digital-imaging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Imagem Digital
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Síntese
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Síntese
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introdução
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Processing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentos do Processing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Aleatoriedade
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Vetores
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vetores
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aplicacoes-em-computacao-grafica" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aplicações em Computação Gráfica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemplo-bola-quicando-sem-vetores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo: Bola quicando (sem vetores)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conceito-e-representacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conceito e Representação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vetores-em-p5js" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vetores em p5.js
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vetores em p5.js">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-bola-quicando-com-vetores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo: Bola quicando (com vetores)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operacoes-com-vetores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operações com Vetores
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Operações com Vetores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subtracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subtração
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplicacao-por-escalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multiplicação por Escalar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Normalização
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produto-escalar-dot-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      Produto Escalar (Dot Product)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produto-vetorial-cross-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      Produto Vetorial (Cross Product)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resumo-das-operacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resumo das Operações
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#angulo-entre-vetores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ângulo entre Vetores
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metodos-estaticos-vs-metodos-de-instancia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métodos Estáticos vs. Métodos de Instância
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Métodos Estáticos vs. Métodos de Instância">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metodos-de-instancia-modificam-o-vetor-original" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métodos de Instância (modificam o vetor original)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodos-estaticos-criam-novos-vetores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métodos Estáticos (criam novos vetores)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#erros-comuns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Erros Comuns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercicios-praticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercícios Práticos
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6">
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Transformações 2D
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Transformações 2D
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introdução
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/translation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Translação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/rotation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rotação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/scaling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Escala
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Combinação de transformações
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/transformation-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Matriz de transformação 2D
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Matemática
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Matemática
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-math/trigonometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trigonometria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Matrizes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Matrizes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-math/matrices/determinant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Determinantes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="vetores">Vetores<a class="headerlink" href="#vetores" title="Permanent link">¶</a></h1>
+<p><strong>Vetores</strong> são fundamentais em simulações e computação gráfica, pois representam grandezas físicas que possuem <strong>magnitude</strong> (tamanho) e <strong>direção</strong>. Exemplos clássicos incluem o movimento de uma esfera caindo, o giro de um planeta ao redor do sol, ou a direção de uma força. Diferentemente de <strong>escalares</strong> (como massa ou temperatura, que têm apenas valor), vetores descrevem deslocamentos, velocidades, forças e muitas outras grandezas essenciais para modelar o mundo físico.</p>
+<p>Por exemplo, dizer que um carro se move a 60 km/h é uma informação incompleta (escalar). Dizer que se move a 60 km/h para nordeste é uma informação completa (vetorial).</p>
+<h2 id="aplicacoes-em-computacao-grafica">Aplicações em Computação Gráfica<a class="headerlink" href="#aplicacoes-em-computacao-grafica" title="Permanent link">¶</a></h2>
+<p>Vetores são usados para:</p>
+<ul>
+<li>Descrever posições, velocidades e acelerações</li>
+<li>Calcular direções de luz e normais de superfícies</li>
+<li>Detectar colisões e calcular rebotes</li>
+<li>Definir direções de câmeras e objetos em 3D</li>
+</ul>
+<h2 id="exemplo-bola-quicando-sem-vetores">Exemplo: Bola quicando (sem vetores)<a class="headerlink" href="#exemplo-bola-quicando-sem-vetores" title="Permanent link">¶</a></h2>
+<p>Antes de nos aprofundarmos no entendimento dos vetores e suas aplicações em computação gráfica, veja primeiro o sketch que implementa a simulação da bola quicando dentro da caixa utilizando variáveis separadas para cada coordenada de posição e velocidade (sem vetores).</p>
+<div class="sketch-runner" data-sketch-path="./demo-ball-bouncing-without-vectors.js" data-width="400" data-height="400" data-title="Bola quicando (sem vetores)" data-pause-at-beginning="false">
+</div>
+
+<p>O sketch adota duas variáveis para a posição (<code>cx</code> e <code>cy</code>) e duas para a velocidade (<code>vx</code> e <code>vy</code>). </p>
+<div class="language-javascript highlight"><span class="filename">Bola quicando (sem vetores): variáveis para posição e velocidade</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">cx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">48</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">let</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d</span><span class="o">/</span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kd">let</span><span class="w"> </span><span class="nx">vx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0</span><span class="p">;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kd">let</span><span class="w"> </span><span class="nx">vy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+</span></code></pre></div>
+<p>A cada frame, a posição é atualizada somando a velocidade, e quando a bola atinge uma borda, o sinal da velocidade correspondente é invertido para simular o rebote.</p>
+<div class="language-javascript highlight"><span class="filename">Bola quicando (sem vetores): atualização da posição e detecção de colisão</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nx">background</span><span class="p">(</span><span class="mf">255</span><span class="p">);</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="c1">// calcula a nova posição # (1)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nx">cx</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">vx</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nx">cy</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">vy</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="c1">// verifica colisão e atualiza velocidade</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">cx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nx">vx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">vx</span><span class="p">;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nx">vy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">vy</span><span class="p">;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="c1">// desenha a bola</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">  </span><span class="nx">stroke</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">  </span><span class="nx">fill</span><span class="p">(</span><span class="mf">127</span><span class="p">);</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span><span class="nx">circle</span><span class="p">(</span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="p">);</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Quando ocorre colisão, invertemos o sinal da velocidade na direção correspondente. Em 3D, seriam necessárias três variáveis para cada propriedade, uma para cada coordenada (x, y, z).</p>
+<h2 id="conceito-e-representacao">Conceito e Representação<a class="headerlink" href="#conceito-e-representacao" title="Permanent link">¶</a></h2>
+<p>O <strong>vetor Euclidiano</strong> (ou <strong>vetor geométrico</strong>) é o tipo de vetor que utilizamos neste material. Ele é representado matematicamente por suas componentes em cada dimensão do espaço. Em 2D, escrevemos <span class="arithmatex">\(\vec{v} = (v_1, v_2)\)</span> ou, associando diretamente às coordenadas, <span class="arithmatex">\(\vec{v} = (v_x, v_y)\)</span>. Em 3D, teríamos <span class="arithmatex">\(\vec{v} = (v_1, v_2, v_3)\)</span> ou <span class="arithmatex">\(\vec{v} = (v_x, v_y, v_z)\)</span>. A notação alternativa <span class="arithmatex">\(\mathbf{v}\)</span> também é comum.</p>
+<p>De forma geral, o vetor é representado matematicamente como:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{v} = (v_1, v_2, \ldots, v_n)
+\end{align}
+\]</div>
+<p>onde <span class="arithmatex">\(n\)</span> é a dimensão do espaço (2D, 3D, etc.) e <span class="arithmatex">\(v_i\)</span> são as componentes do vetor.</p>
+<p>Um vetor pode ser visualizado como uma <strong>seta</strong>: a direção indica para onde aponta, e a magnitude (ou <strong>norma</strong>) é o comprimento da seta. Frequentemente, dizemos que um vetor parte de um ponto <span class="arithmatex">\(A\)</span> e chega a um ponto <span class="arithmatex">\(B\)</span>, mas em computação gráfica, normalmente consideramos vetores a partir da origem.</p>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-vector.png" data-desc-position="bottom"><img alt="alt text" src="vectors-vector.png" width="300"></a>
+     <figcaption>Representação visual de um vetor Euclidiano mostrando magnitude (comprimento da seta) e direção (orientação da seta)</figcaption>
+</figure>
+<p>Pense em um vetor como instruções para caminhar de um ponto a outro:  </p>
+<ul>
+<li><code>(3, 5)</code>: caminhe 3 unidades para o leste e 5 para o norte.  </li>
+<li><code>(-3, 5)</code>: caminhe 3 para o oeste e 5 para o norte.  </li>
+<li><code>(10, -5)</code>: caminhe 10 para o leste e 5 para o sul.</li>
+</ul>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-walking.png" data-desc-position="bottom"><img alt="alt text" src="vectors-walking.png" width="500"></a>
+     <figcaption>Analogia de vetores como instruções de caminhada: cada vetor indica direção e distância a percorrer no plano cartesiano</figcaption>
+</figure>
+<p>A <strong>magnitude</strong> (ou norma) de um vetor é calculada pelo Teorema de Pitágoras:</p>
+<p><strong>Para 2D:</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{v_1^2 + v_2^2}
+\end{align}
+\]</div>
+<p><strong>Para 3D:</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{v_1^2 + v_2^2 + v_3^2}
+\end{align}
+\]</div>
+<p><strong>Para n dimensões:</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+  \Vert\vec{v}\Vert = \sqrt{\sum_{i=1}^{n} v_i^2}
+\end{align}
+\]</div>
+<p>A figura a seguir ilustra a relação entre o cálculo da norma e o Teorema de Pitágoras (cálculo da hipotenusa do triângulo retângulo).</p>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-norm.png" data-desc-position="bottom"><img alt="alt text" src="vectors-norm.png" width="330"></a>
+     <figcaption>Cálculo da norma (magnitude) do vetor usando o Teorema de Pitágoras - a hipotenusa do triângulo retângulo formado pelas componentes</figcaption>
+</figure>
+<h2 id="vetores-em-p5js">Vetores em p5.js<a class="headerlink" href="#vetores-em-p5js" title="Permanent link">¶</a></h2>
+<p>Na biblioteca p5.js, a classe <code>p5.Vector</code> e a função <code>createVector(x, y)</code> facilitam a criação e manipulação de vetores:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span>
+</span></code></pre></div>
+<p>A seguir, um exemplo de implementação do sketch da bola quicando dentro de uma caixa, utilizando vetores para representar a posição e a velocidade da bola.</p>
+<h3 id="exemplo-bola-quicando-com-vetores">Exemplo: Bola quicando (com vetores)<a class="headerlink" href="#exemplo-bola-quicando-com-vetores" title="Permanent link">¶</a></h3>
+<p>Ao usar vetores, agrupamos as propriedades relacionadas:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+</span></code></pre></div>
+<p>A atualização da posição é feita somando o vetor de velocidade ao vetor de posição:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">position</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">velocity</span><span class="p">);</span>
+</span></code></pre></div>
+<p>A figura a seguir ilustra a relação entre o vetor posição (localização atual) e o vetor velocidade (direção e velocidade do movimento).</p>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-position-speed.png" data-desc-position="bottom"><img alt="alt text" src="vectors-position-speed.png" width="500"></a>
+     <figcaption>Relação entre vetor posição (localização atual) e vetor velocidade (direção e velocidade do movimento)</figcaption>
+</figure>
+<p>A figura indica que o vetor "posição", ao ser atualizado pela soma com o vetor "velocidade", resulta em um novo vetor posição, deslocado na direção e magnitude da velocidade (na prática, movendo-se x passos na horizontal e y passos na vertical).</p>
+<p>No sketch, a cada frame, a posição é atualizada pela velocidade, representando o movimento do objeto.</p>
+<div class="admonition note">
+<p class="admonition-title">Terminologia</p>
+<p>Utilizamos "velocity" (velocidade) para nos referir ao vetor que representa tanto a direção quanto a velocidade do movimento. Em alguns contextos, "velocity" refere-se apenas à magnitude da velocidade.</p>
+</div>
+<p>Na sequência, veremos mais detalhes sobre as operações que podem ser realizadas com vetores.</p>
+<h2 id="operacoes-com-vetores">Operações com Vetores<a class="headerlink" href="#operacoes-com-vetores" title="Permanent link">¶</a></h2>
+<h3 id="adicao">Adição<a class="headerlink" href="#adicao" title="Permanent link">¶</a></h3>
+<p>A soma de dois vetores resulta em um novo vetor, somando-se componente a componente:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{w} = \vec{u} + \vec{v} = (u_1 + v_1,\, u_2 + v_2)
+\end{align}
+\]</div>
+<p>Exemplo:</p>
+<ul>
+<li><span class="arithmatex">\(\vec{u} = (5, 2)\)</span></li>
+<li><span class="arithmatex">\(\vec{v} = (3, 4)\)</span></li>
+<li><span class="arithmatex">\(\vec{w} = (5, 2) + (3, 4) = (8, 6)\)</span></li>
+</ul>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-addition.png" data-desc-position="bottom"><img alt="alt text" src="vectors-addition.png" width="500"></a>
+     <figcaption>Adição de vetores usando a regra do paralelogramo - o vetor resultante é a diagonal que conecta a origem ao vértice oposto</figcaption>
+</figure>
+<h3 id="subtracao">Subtração<a class="headerlink" href="#subtracao" title="Permanent link">¶</a></h3>
+<p>A subtração de vetores é feita componente a componente:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{w} = \vec{u} - \vec{v} = (u_1 - v_1,\, u_2 - v_2)
+\end{align}
+\]</div>
+<p>Ou, de forma equivalente, somando o vetor negativo:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{w} = \vec{u} + (-\vec{v})
+\end{align}
+\]</div>
+<p>Quando temos dois vetores <span class="arithmatex">\(\vec{u}\)</span> e
+<span class="arithmatex">\(\vec{v}\)</span>, a subtração vetorial <span class="arithmatex">\(\vec{v} - \vec{u}\)</span>
+produz um vetor que aponta de <span class="arithmatex">\(\vec{u}\)</span> para
+<span class="arithmatex">\(\vec{v}\)</span> (<strong>perceba a ordem na subtração</strong>). A magnitude (ou norma) deste vetor de
+diferença é exatamente a distância euclidiana entre
+os dois pontos.</p>
+<figure>
+     <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="vectors-subtraction.png" data-desc-position="bottom"><img alt="alt text" src="vectors-subtraction.png" width="500"></a>
+     <figcaption>Subtração de vetores: o resultado aponta do extremo do segundo vetor para o extremo do primeiro, indicando a diferença entre eles</figcaption>
+</figure>
+<p>O skecth a seguir ilustra este conceito.</p>
+<div class="sketch-runner" data-sketch-path="./demo-vector-subtraction-scheme.js" data-width="700" data-height="500" data-title="Diferença entre Vetores" data-pause-at-beginning="false">
+</div>
+
+<p>Em p5.js podemos calcular a diferença entre dois vetores usando o método <code>sub()</code> ou a função estática <code>p5.Vector.sub()</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">difference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="p">);</span>
+</span></code></pre></div>
+<p>O vetor <code>difference</code> resultante aponta de <span class="arithmatex">\(\vec{u}\)</span> para <span class="arithmatex">\(\vec{v}\)</span>.</p>
+<p><strong>Interpretação Geométrica</strong></p>
+<p>O vetor diferença <span class="arithmatex">\(\vec{v} - \vec{u}\)</span> representa:</p>
+<ol>
+<li><strong>Direção</strong>: De <span class="arithmatex">\(\vec{u}\)</span> para <span class="arithmatex">\(\vec{v}\)</span></li>
+<li><strong>Sentido</strong>: Apontando para <span class="arithmatex">\(\vec{v}\)</span></li>
+<li><strong>Magnitude</strong>: A distância euclidiana entre <span class="arithmatex">\(\vec{u}\)</span> e <span class="arithmatex">\(\vec{v}\)</span></li>
+</ol>
+<p>Veja o sketch a seguir, onde uma bola aponta na direção do mouse. O vetor diferença entre o vetor do mouse e o vetor da bola é calculado para determinar o vetor direção (<span class="arithmatex">\(\vec{mouse} - \vec{ball}\)</span>).</p>
+<div class="sketch-runner" data-sketch-path="./demo-vector-subtraction-ball-static-mouse.js" data-width="400" data-height="400" data-title="Diferença entre Vetores" data-pause-at-beginning="false">
+</div>
+
+<h3 id="multiplicacao-por-escalar">Multiplicação por Escalar<a class="headerlink" href="#multiplicacao-por-escalar" title="Permanent link">¶</a></h3>
+<p>Multiplicar um vetor por um número real (escalar) altera sua magnitude, mantendo a direção:</p>
+<div class="arithmatex">\[
+\begin{align}
+  a \cdot \vec{v} = (a \cdot v_1,\, a \cdot v_2)
+\end{align}
+\]</div>
+<p>A magnitude do vetor resultante é:</p>
+<div class="arithmatex">\[
+\Vert a \cdot \vec{v} \Vert = |a| \cdot \Vert \vec{v} \Vert
+\]</div>
+<p>De outra forma, a multiplicação por escalar estica ou encolhe o vetor:</p>
+<ul>
+<li>Se <span class="arithmatex">\(|a| &gt; 1\)</span>, o vetor é esticado (aumenta a magnitude)</li>
+<li>Se <span class="arithmatex">\(0 &lt; |a| &lt; 1\)</span>, o vetor é encolhido (diminui a magnitude)</li>
+<li>Se <span class="arithmatex">\(a &lt; 0\)</span>, o vetor é invertido (aponta na direção oposta)</li>
+</ul>
+<p>Em p5.js podemos multiplicar um vetor por um escalar usando o método <code>mult()</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nx">velocity</span><span class="p">.</span><span class="nx">mult</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// dobra a velocidade</span>
+</span></code></pre></div>
+<h3 id="normalizacao">Normalização<a class="headerlink" href="#normalizacao" title="Permanent link">¶</a></h3>
+<p>Um <strong>vetor unitário</strong> tem magnitude igual a 1. Para normalizar um vetor <span class="arithmatex">\(\vec{v}\)</span> (ou seja, convertê-lo em um vetor unitário), dividimos cada componente pela magnitude do vetor:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{u} = \frac{\vec{v}}{\Vert\vec{v}\Vert}
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Normalização</p>
+<p>A normalização é útil para garantir que um vetor tenha magnitude 1, mantendo sua direção. Isso é especialmente importante em computação gráfica e física, onde vetores unitários são frequentemente usados para representar direções.</p>
+</div>
+<p>Em p5.js podemos normalizar um vetor usando o método <code>normalize()</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">velocity</span><span class="p">.</span><span class="nx">normalize</span><span class="p">();</span>
+</span></code></pre></div>
+<h3 id="produto-escalar-dot-product">Produto Escalar (<em>Dot Product</em>)<a class="headerlink" href="#produto-escalar-dot-product" title="Permanent link">¶</a></h3>
+<p>O <strong>produto escalar</strong> é uma das operações mais úteis e versáteis com vetores. Ele mede o quanto dois vetores apontam na mesma direção e tem múltiplas interpretações geométricas.</p>
+<p><strong>Fórmula matemática</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{a} \cdot \vec{b} = a_1 b_1 + a_2 b_2
+\end{align}
+\]</div>
+<p><strong>Interpretação geométrica</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+  \vec{a} \cdot \vec{b} = \Vert\vec{a}\Vert \Vert\vec{b}\Vert \cos(\theta)
+\end{align}
+\]</div>
+<p>onde <span class="arithmatex">\(\theta\)</span> é o ângulo entre os vetores.</p>
+<p><strong>Interpretações práticas</strong></p>
+<ol>
+<li>
+<p><strong>Direção relativa</strong>:</p>
+<ol>
+<li>Se <span class="arithmatex">\(\vec{a} \cdot \vec{b} &gt; 0\)</span>: vetores apontam na mesma direção geral (ângulo &lt; 90°)</li>
+<li>Se <span class="arithmatex">\(\vec{a} \cdot \vec{b} = 0\)</span>: vetores são perpendiculares (ângulo = 90°)</li>
+<li>Se <span class="arithmatex">\(\vec{a} \cdot \vec{b} &lt; 0\)</span>: vetores apontam em direções opostas (ângulo &gt; 90°)</li>
+</ol>
+</li>
+<li>
+<p><strong>Projeção</strong>: O produto escalar de <span class="arithmatex">\(\vec{a}\)</span> com um vetor unitário <span class="arithmatex">\(\hat{u}\)</span> dá a magnitude da projeção de <span class="arithmatex">\(\vec{a}\)</span> na direção de <span class="arithmatex">\(\hat{u}\)</span>, ou seja: <span class="arithmatex">\(\text{projeção} = \vec{a} \cdot \hat{u}\)</span></p>
+</li>
+<li>
+<p><strong>Similaridade</strong>: Vetores normalizados com produto escalar próximo de <span class="arithmatex">\(1\)</span> são muito similares; próximo de <span class="arithmatex">\(-1\)</span> são opostos.</p>
+</li>
+</ol>
+<p>Em p5.js podemos calcular o produto escalar usando o método <code>dot()</code> ou a função estática <code>p5.Vector.dot()</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">dot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">dot</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// Interpretação do resultado</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">dot</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Vetores apontam na mesma direção geral"</span><span class="p">);</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">dot</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Vetores apontam em direções opostas"</span><span class="p">);</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Vetores são perpendiculares"</span><span class="p">);</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Casos práticos:</strong></p>
+<ul>
+<li><strong>Detecção de colisão</strong>: Verificar se um objeto está se movendo em direção a outro</li>
+<li><strong>Iluminação</strong>: Calcular intensidade da luz baseada no ângulo com a normal da superfície</li>
+<li><strong>Campo de visão</strong>: Determinar se um objeto está dentro do cone de visão</li>
+<li><strong>Física</strong>: Calcular trabalho realizado por uma força (<span class="arithmatex">\(W = \vec{F} \cdot \vec{d}\)</span>)</li>
+</ul>
+<h3 id="produto-vetorial-cross-product">Produto Vetorial (<em>Cross Product</em>)<a class="headerlink" href="#produto-vetorial-cross-product" title="Permanent link">¶</a></h3>
+<p>O <strong>produto vetorial</strong> é uma operação fundamental em 3D que produz um vetor perpendicular aos dois vetores originais. Diferente do produto escalar que resulta em um número, o produto vetorial gera um novo vetor.</p>
+<p><strong>Fórmula matemática para 3D:</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+\vec{a} \times \vec{b} = (a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1)
+\end{align}
+\]</div>
+<p>O produto vetorial entre dois vetores tridimensionais <span class="arithmatex">\(\vec{a}\)</span> e <span class="arithmatex">\(\vec{b}\)</span> resulta em um novo vetor <span class="arithmatex">\(\vec{a} \times \vec{b}\)</span> perpendicular ao plano formado por eles. A equação  mostra como calcular cada componente desse vetor resultante: o primeiro elemento corresponde à diferença entre o produto do segundo componente de <span class="arithmatex">\(\vec{a}\)</span> pelo terceiro de <span class="arithmatex">\(\vec{b}\)</span> e o produto do terceiro de <span class="arithmatex">\(\vec{a}\)</span> pelo segundo de <span class="arithmatex">\(\vec{b}\)</span>, e assim por diante para os outros componentes.</p>
+<div class="admonition note">
+<p class="admonition-title">Determinante</p>
+<p>O produto vetorial pode ser representado como o determinante de uma matriz 3x3:</p>
+<div class="arithmatex">\[
+\vec{a} \times \vec{b} = \begin{vmatrix}
+\hat{i} &amp; \hat{j} &amp; \hat{k} \\
+a_1 &amp; a_2 &amp; a_3 \\
+b_1 &amp; b_2 &amp; b_3
+\end{vmatrix}
+\]</div>
+<p>onde <span class="arithmatex">\(\hat{i}\)</span>, <span class="arithmatex">\(\hat{j}\)</span> e <span class="arithmatex">\(\hat{k}\)</span> são os vetores unitários nas direções x, y e z, respectivamente.</p>
+<p>Assim, o determinante fornece uma forma compacta e sistemática de calcular o vetor perpendicular aos dois vetores originais.</p>
+</div>
+<p><strong>Exemplo Numérico: Produto Vetorial</strong></p>
+<p>Considere os vetores <span class="arithmatex">\(\vec{a} = (2, 3, 4)\)</span> e <span class="arithmatex">\(\vec{b} = (5, 6, 7)\)</span>. Vamos calcular o produto vetorial <span class="arithmatex">\(\vec{a} \times \vec{b}\)</span> passo-a-passo:</p>
+<p>Pela fórmula:</p>
+<div class="arithmatex">\[
+\vec{a} \times \vec{b} = (a_2 b_3 - a_3 b_2,\;\; a_3 b_1 - a_1 b_3,\;\; a_1 b_2 - a_2 b_1)
+\]</div>
+<p>Substituindo os valores:</p>
+<ul>
+<li>Primeira componente (x): <span class="arithmatex">\(3 \times 7 - 4 \times 6 = 21 - 24 = -3\)</span></li>
+<li>Segunda componente (y): <span class="arithmatex">\(4 \times 5 - 2 \times 7 = 20 - 14 = 6\)</span></li>
+<li>Terceira componente (z): <span class="arithmatex">\(2 \times 6 - 3 \times 5 = 12 - 15 = -3\)</span></li>
+</ul>
+<p>Portanto,</p>
+<div class="arithmatex">\[
+\vec{a} \times \vec{b} = (-3,\; 6,\; -3)
+\]</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>O vetor resultante é perpendicular aos vetores <span class="arithmatex">\(\vec{a}\)</span> e <span class="arithmatex">\(\vec{b}\)</span>.</li>
+<li>Sua direção segue a regra da mão direita.</li>
+<li>Sua magnitude corresponde à área do paralelogramo formado por <span class="arithmatex">\(\vec{a}\)</span> e <span class="arithmatex">\(\vec{b}\)</span>.</li>
+</ul>
+<p><strong>Interpretação geométrica</strong>:</p>
+<div class="arithmatex">\[
+\begin{align}
+\|\vec{a} \times \vec{b}\| = \|\vec{a}\| \|\vec{b}\| \sin(\theta)
+\end{align}
+\]</div>
+<p>onde <span class="arithmatex">\(\theta\)</span> é o ângulo entre os vetores.</p>
+<p><strong>Propriedades importantes</strong>:</p>
+<ol>
+<li><strong>Direção</strong>: O vetor resultante é perpendicular aos dois vetores originais</li>
+<li><strong>Magnitude</strong>: Igual à área do paralelogramo formado pelos vetores</li>
+<li><strong>Regra da mão direita</strong>: Determina a direção do vetor resultante</li>
+<li><strong>Anti-comutatividade</strong>: <span class="arithmatex">\(\vec{a} \times \vec{b} = -(\vec{b} \times \vec{a})\)</span></li>
+<li><strong>Vetor nulo</strong>: Se <span class="arithmatex">\(\vec{a} \parallel \vec{b}\)</span>, então <span class="arithmatex">\(\vec{a} \times \vec{b} = \vec{0}\)</span></li>
+</ol>
+<p>Em p5.js podemos calcular o produto vetorial usando a função estática <code>p5.Vector.cross()</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">6</span><span class="p">);</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">cross</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">// Resultado: Vetor perpendicular aos vetores a e b</span>
+</span></code></pre></div>
+<p><strong>Para vetores 2D (tratados como 3D com z=0):</strong></p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span><span class="w">  </span><span class="c1">// Automaticamente (3, 4, 0)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span><span class="w">  </span><span class="c1">// Automaticamente (1, 2, 0)</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">cross</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">cross</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">// Resultado: (0, 0, 2) - aponta para fora da tela (z=2)</span>
+</span></code></pre></div>
+<p><strong>Casos práticos:</strong></p>
+<ol>
+<li><strong>Cálculo de normais</strong>: Determinar a normal de uma superfície a partir de dois vetores tangentes</li>
+<li><strong>Rotação e orientação</strong>: Verificar se uma rotação é horária ou anti-horária</li>
+<li><strong>Área de triângulos/paralelogramos</strong>: <span class="arithmatex">\(\text{Área} = \frac{1}{2}\|\vec{a} \times \vec{b}\|\)</span></li>
+<li><strong>Torque em física</strong>: <span class="arithmatex">\(\vec{\tau} = \vec{r} \times \vec{F}\)</span></li>
+<li><strong>Detecção de lado</strong>: Verificar de que lado de uma linha um ponto está</li>
+</ol>
+<p><strong>Interpretação do resultado:</strong></p>
+<ul>
+<li><strong>Magnitude grande</strong>: Vetores são quase perpendiculares</li>
+<li><strong>Magnitude pequena</strong>: Vetores são quase paralelos</li>
+<li><strong>Magnitude zero</strong>: Vetores são paralelos ou anti-paralelos</li>
+<li><strong>Direção</strong>: Perpendicular ao plano formado pelos dois vetores</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Limitação em 2D</p>
+<p>Em 2D, o produto vetorial não existe geometricamente. Em p5.js, vetores 2D são tratados como 3D com z = 0, resultando em um vetor que aponta para dentro ou fora da tela.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Regra da Mão Direita</p>
+<p>Para determinar a direção de <span class="arithmatex">\(\vec{a} \times \vec{b}\)</span>: aponte os dedos da mão direita na direção de <span class="arithmatex">\(\vec{a}\)</span>, curve-os em direção a <span class="arithmatex">\(\vec{b}\)</span>, e o polegar indicará a direção do produto vetorial.</p>
+</div>
+<h2 id="resumo-das-operacoes">Resumo das Operações<a class="headerlink" href="#resumo-das-operacoes" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Fórmula</th>
+<th>p5.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Soma</td>
+<td><span class="arithmatex">\(\vec{u} + \vec{v}\)</span></td>
+<td><code>u.add(v)</code></td>
+</tr>
+<tr>
+<td>Subtração</td>
+<td><span class="arithmatex">\(\vec{u} - \vec{v}\)</span></td>
+<td><code>u.sub(v)</code></td>
+</tr>
+<tr>
+<td>Multiplicação</td>
+<td><span class="arithmatex">\(a \cdot \vec{v}\)</span></td>
+<td><code>v.mult(a)</code></td>
+</tr>
+<tr>
+<td>Normalização</td>
+<td><span class="arithmatex">\(\vec{v} / \Vert\vec{v}\Vert\)</span></td>
+<td><code>v.normalize()</code></td>
+</tr>
+<tr>
+<td>Produto escalar</td>
+<td><span class="arithmatex">\(\vec{u} \cdot \vec{v}\)</span></td>
+<td><code>p5.Vector.dot(u, v)</code></td>
+</tr>
+<tr>
+<td>Produto vetorial</td>
+<td><span class="arithmatex">\(\vec{u} \times \vec{v}\)</span> (3D)</td>
+<td><code>p5.Vector.cross(u, v)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="angulo-entre-vetores">Ângulo entre Vetores<a class="headerlink" href="#angulo-entre-vetores" title="Permanent link">¶</a></h2>
+<p>O ângulo entre dois vetores pode ser calculado usando o produto escalar:</p>
+<div class="arithmatex">\[
+\begin{align}
+  \cos(\theta) = \frac{\vec{a} \cdot \vec{b}}{\Vert\vec{a}\Vert \Vert\vec{b}\Vert}
+\end{align}
+\]</div>
+<p>Portanto:</p>
+<div class="arithmatex">\[
+\begin{align}
+\theta = \arccos\left(\frac{\vec{a} \cdot \vec{b}}{\Vert\vec{a}\Vert \Vert\vec{b}\Vert}\right)
+\end{align}
+\]</div>
+<p>Em p5.js:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">angleBetween</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Casos especiais:</strong></p>
+<ul>
+<li>Se <span class="arithmatex">\(\theta = 0°\)</span>: vetores apontam na mesma direção</li>
+<li>Se <span class="arithmatex">\(\theta = 90°\)</span>: vetores são perpendiculares</li>
+<li>Se <span class="arithmatex">\(\theta = 180°\)</span>: vetores apontam em direções opostas</li>
+</ul>
+<p>Podemos utilizar essa informação para, dentre outras aplicações:</p>
+<ul>
+<li>Determinar se um objeto está dentro do campo de visão</li>
+<li>Calcular reflexões e refrações</li>
+<li>Ajustar orientações de câmeras e luzes</li>
+</ul>
+<h2 id="metodos-estaticos-vs-metodos-de-instancia">Métodos Estáticos vs. Métodos de Instância<a class="headerlink" href="#metodos-estaticos-vs-metodos-de-instancia" title="Permanent link">¶</a></h2>
+<p>Em p5.js, há duas formas de trabalhar com vetores:</p>
+<h3 id="metodos-de-instancia-modificam-o-vetor-original">Métodos de Instância (modificam o vetor original)<a class="headerlink" href="#metodos-de-instancia-modificam-o-vetor-original" title="Permanent link">¶</a></h3>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nx">v</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span><span class="w"> </span><span class="c1">// v agora é (4, 6)</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nx">v</span><span class="p">.</span><span class="nx">mult</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// v agora é (8, 12)</span>
+</span></code></pre></div>
+<h3 id="metodos-estaticos-criam-novos-vetores">Métodos Estáticos (criam novos vetores)<a class="headerlink" href="#metodos-estaticos-criam-novos-vetores" title="Permanent link">¶</a></h3>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// a e b não são modificados</span>
+</span></code></pre></div>
+<p><strong>Quando usar cada um:</strong></p>
+<ul>
+<li><strong>Métodos de instância</strong>: quando você quer modificar o vetor original (ex: atualizar posição)</li>
+<li><strong>Métodos estáticos</strong>: quando você quer preservar os vetores originais (ex: cálculos temporários)</li>
+</ul>
+<p>Os sketches a seguir ilustram a utilização dos recursos vistos neste capítulo.</p>
+<div class="grid">
+<div class="sketch-runner" data-height="400" data-pause-at-beginning="false" data-sketch-path="./demo-vector-ball-chasing-mouse.js" data-title="Bola perseguindo o mouse (com vetores)" data-width="400">
+</div>
+<div class="sketch-runner" data-height="400" data-pause-at-beginning="false" data-sketch-path="./demo-vector-car-chasing-mouse.js" data-title="Carro perseguindo o mouse (com vetores)" data-width="400">
+</div>
+</div>
+<h2 id="erros-comuns">Erros Comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">¶</a></h2>
+<p><strong>1. Mutação Acidental de Vetores</strong></p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// ❌ ERRO: modifica o vetor original</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">a</span><span class="p">;</span><span class="w"> </span><span class="c1">// b é uma referência a a</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nx">b</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">));</span><span class="w"> </span><span class="c1">// modifica tanto a quanto b!</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">// ✅ CORRETO: cria uma cópia</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">copy</span><span class="p">();</span><span class="w"> </span><span class="c1">// b é uma cópia independente</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="nx">b</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">));</span><span class="w"> </span><span class="c1">// só modifica b</span>
+</span></code></pre></div>
+<p><strong>2. Divisão por Zero na Normalização</strong></p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// ❌ ERRO: pode causar NaN se magnitude for zero</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nx">v</span><span class="p">.</span><span class="nx">normalize</span><span class="p">();</span><span class="w"> </span><span class="c1">// Retorna (NaN, NaN)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1">// ✅ CORRETO: verifica antes de normalizar</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="kd">let</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">mag</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">  </span><span class="nx">v</span><span class="p">.</span><span class="nx">normalize</span><span class="p">();</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>3. Confundir Métodos Estáticos e de Instância</strong></p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// ❌ ERRO: mistura sintaxes</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">);</span><span class="w"> </span><span class="c1">// add() de instância não aceita dois parâmetros</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">// ✅ CORRETO: use métodos estáticos para múltiplos vetores</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="kd">let</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>4. Não Considerar a Ordem na Subtração</strong></p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">// A subtração de vetores não é comutativa!</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createVector</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="kd">let</span><span class="w"> </span><span class="nx">result1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// (3, 2)</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kd">let</span><span class="w"> </span><span class="nx">result2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p5</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">);</span><span class="w"> </span><span class="c1">// (-3, -2) - diferente!</span>
+</span></code></pre></div>
+<h2 id="exercicios-praticos">Exercícios Práticos<a class="headerlink" href="#exercicios-praticos" title="Permanent link">¶</a></h2>
+<p><strong>Exercício 1: Seguidor de Mouse</strong></p>
+<p>Crie um objeto que se move suavemente em direção ao mouse usando vetores.</p>
+<p><strong>Dicas:</strong></p>
+<ul>
+<li>Use <code>createVector(mouseX, mouseY)</code> para a posição do mouse</li>
+<li>Calcule a direção com subtração de vetores</li>
+<li>Use normalização e multiplicação para controlar a velocidade</li>
+</ul>
+<p><strong>Exercício 2: Sistema de Partículas</strong></p>
+<p>Implemente um sistema onde múltiplas partículas se movem com velocidades aleatórias e quicam nas bordas.</p>
+<p><strong>Requisitos:</strong></p>
+<ul>
+<li>Array de objetos com posição e velocidade vetoriais</li>
+<li>Detecção de colisão com bordas</li>
+<li>Diferentes tamanhos e cores para cada partícula</li>
+</ul>
+<p><strong>Exercício 3: Força Gravitacional</strong></p>
+<p>Simule dois objetos que se atraem mutuamente usando a fórmula da gravitação.</p>
+<p><strong>Fórmula:</strong> <span class="arithmatex">\(F = G \frac{m_1 m_2}{r^2}\)</span></p>
+<p><strong>Dicas:</strong></p>
+<ul>
+<li>Calcule a distância entre objetos</li>
+<li>Use a direção normalizada para aplicar a força</li>
+<li>Aplique a terceira lei de Newton (ação e reação)</li>
+</ul>
+<p><strong>Exercício 4: Campo de Forças</strong></p>
+<p>Crie um campo onde partículas são influenciadas por forças que variam conforme a posição.</p>
+<p><strong>Ideias:</strong></p>
+<ul>
+<li>Vento que sopra horizontalmente</li>
+<li>Atração/repulsão radial a partir do centro</li>
+<li>Turbulência usando ruído de Perlin</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Recursos Adicionais</p>
+<ul>
+<li><a href="https://p5js.org/reference/#/p5.Vector">Documentação oficial do p5.Vector</a></li>
+<li><a href="https://natureofcode.com/vectors/">The Nature of Code - Vectors</a></li>
+<li><a href="https://www.khanacademy.org/math/linear-algebra">Linear Algebra Khan Academy</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.integrate", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../assets/js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/sketch-runner-iframe.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

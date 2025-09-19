@@ -1,0 +1,495 @@
+/* docs/assets/css/sketch-runner.css */
+
+/* =================================================================
+   SKETCH RUNNER - INTERFACE MODERNA
+   ================================================================= */
+
+/* Estilos base para o elemento não inicializado */
+.sketch-runner {
+    margin: 2rem 0;
+    border: 2px dashed var(--md-accent-fg-color--transparent);
+    padding: 2rem;
+    background: linear-gradient(135deg, 
+        var(--md-code-bg-color), 
+        color-mix(in srgb, var(--md-code-bg-color) 95%, var(--md-accent-fg-color) 5%)
+    );
+    border-radius: 12px;
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.sketch-runner:hover {
+    border-color: var(--md-accent-fg-color);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--md-accent-fg-color) 20%, transparent);
+}
+
+.sketch-runner::before {
+    content: "🎨 Carregando Sketch Interativo...";
+    display: block;
+    text-align: center;
+    color: var(--md-default-fg-color--light);
+    font-style: italic;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.sketch-runner.initialized::before {
+    display: none;
+}
+
+/* =================================================================
+   COMPONENTE PRINCIPAL
+   ================================================================= */
+
+.sketch-runner-component {
+    clear: both;
+    margin: 2rem 0;
+    overflow: visible; /* Mudado para visible */
+    border-radius: 16px;
+    border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 15%, transparent);
+    background: var(--md-default-bg-color);
+    box-shadow: 
+        0 4px 6px -1px color-mix(in srgb, var(--md-shadow-z1) 10%, transparent),
+        0 2px 4px -1px color-mix(in srgb, var(--md-shadow-z1) 6%, transparent);
+    transition: all 0.3s ease;
+    width: fit-content; /* Ajustar ao conteúdo */
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto; /* Centralizar */
+}
+
+.sketch-runner-component:hover {
+    box-shadow: 
+        0 10px 15px -3px color-mix(in srgb, var(--md-shadow-z1) 15%, transparent),
+        0 4px 6px -2px color-mix(in srgb, var(--md-shadow-z1) 10%, transparent);
+}
+
+/* =================================================================
+   ÁREA DO CANVAS
+   ================================================================= */
+
+.sketch-canvas-wrapper {
+    position: relative;
+    overflow: visible; /* Mudado para visible */
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: center; /* Centralizar conteúdo */
+    align-items: center;
+    padding: 1rem; /* Adicionar padding para espaçamento */
+}
+
+.sketch-canvas-wrapper .loading-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--md-default-fg-color--light);
+    z-index: 10;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    background: var(--md-default-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--md-shadow-z1) 20%, transparent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sketch-canvas-wrapper .loading-text::before {
+    content: "⏳";
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.canvas-container {
+    transition: all 0.4s ease;
+    position: relative;
+    background: #ffffff;
+    overflow: visible; /* Mudado de hidden para visible */
+    min-height: 200px; /* Altura mínima garantida */
+}
+
+.canvas-container.opacity-0 {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.canvas-container.opacity-100 {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.canvas-container canvas {
+    display: block !important;
+    border-radius: 12px 12px 0 0;
+    transition: all 0.3s ease;
+}
+
+/* =================================================================
+   CONTROLES MODERNOS
+   ================================================================= */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(180deg, 
+        color-mix(in srgb, var(--md-default-bg-color) 98%, var(--md-default-fg-color) 2%),
+        var(--md-default-bg-color)
+    );
+    border-top: 1px solid color-mix(in srgb, var(--md-default-fg-color) 8%, transparent);
+    padding: 0.5rem 0.5rem; /* Aumentar padding */
+    backdrop-filter: blur(8px);
+    border-radius: 0 0 16px 16px; /* Arredondar cantos inferiores */
+    min-width: 100%; /* Ocupar toda a largura do container */
+    box-sizing: border-box;
+}
+
+.controls-left {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--md-default-fg-color);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.control-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        color-mix(in srgb, var(--md-accent-fg-color) 20%, transparent),
+        transparent
+    );
+    transition: left 0.3s ease;
+}
+
+.control-btn:hover {
+    background: color-mix(in srgb, var(--md-accent-fg-color) 12%, transparent);
+    border-color: color-mix(in srgb, var(--md-accent-fg-color) 25%, transparent);
+    color: var(--md-accent-fg-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--md-accent-fg-color) 25%, transparent);
+}
+
+.control-btn:hover::before {
+    left: 100%;
+}
+
+.control-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--md-accent-fg-color) 30%, transparent);
+}
+
+.control-btn .icon {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.control-btn:hover .icon {
+    transform: scale(1.1);
+}
+
+/* Botão específico para play/pause */
+.play-pause-btn:hover {
+    background: color-mix(in srgb, #10b981 12%, transparent);
+    border-color: color-mix(in srgb, #10b981 25%, transparent);
+    color: #10b981;
+    box-shadow: 0 2px 8px color-mix(in srgb, #10b981 25%, transparent);
+}
+
+/* Botão específico para reset */
+.reset-btn:hover {
+    background: color-mix(in srgb, #f59e0b 12%, transparent);
+    border-color: color-mix(in srgb, #f59e0b 25%, transparent);
+    color: #f59e0b;
+    box-shadow: 0 2px 8px color-mix(in srgb, #f59e0b 25%, transparent);
+}
+
+/* =================================================================
+   LINK PARA EDITOR
+   ================================================================= */
+
+.editor-link-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--md-default-fg-color--light);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--md-primary-fg-color) 5%, transparent),
+        color-mix(in srgb, var(--md-primary-fg-color) 2%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--md-primary-fg-color) 15%, transparent);
+}
+
+.editor-link-container:hover {
+    color: var(--md-primary-fg-color);
+    text-decoration: none;
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--md-primary-fg-color) 15%, transparent),
+        color-mix(in srgb, var(--md-primary-fg-color) 8%, transparent)
+    );
+    border-color: color-mix(in srgb, var(--md-primary-fg-color) 30%, transparent);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--md-primary-fg-color) 25%, transparent);
+}
+
+.editor-link-container .icon {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.editor-link-container:hover .icon {
+    opacity: 1;
+    transform: translateX(2px);
+}
+
+/* =================================================================
+   INDICADORES DE ESTADO
+   ================================================================= */
+
+.sketch-runner-component::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        var(--md-accent-fg-color),
+        var(--md-primary-fg-color)
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.sketch-runner-component.loading::before {
+    opacity: 1;
+    animation: loading-bar 2s ease-in-out infinite;
+}
+
+@keyframes loading-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Status indicator */
+.status-indicator {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #10b981 30%, transparent);
+    z-index: 100;
+    animation: status-pulse 2s ease-in-out infinite;
+}
+
+.status-indicator.paused {
+    background: #f59e0b;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #f59e0b 30%, transparent);
+}
+
+.status-indicator.error {
+    background: #ef4444;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #ef4444 30%, transparent);
+}
+
+@keyframes status-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* =================================================================
+   RESPONSIVIDADE APRIMORADA
+   ================================================================= */
+
+@media (max-width: 768px) {
+    .sketch-runner-component {
+        margin: 1.5rem 0;
+        border-radius: 12px;
+    }
+    
+    .controls {
+        padding: 0.5rem;
+    }
+    
+    .control-btn {
+        padding: 0.35rem 0.35rem;
+    }
+    
+    .control-btn .button-text {
+        display: none;
+    }
+    
+    .editor-link-container {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sketch-runner {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .sketch-runner-component {
+        border-radius: 10px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    
+    .controls-left {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .control-btn {
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+    }
+    
+    .editor-link-container {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* =================================================================
+   DARK MODE SUPPORT
+   ================================================================= */
+
+[data-md-color-scheme="slate"] .sketch-canvas-wrapper {
+    background: linear-gradient(135deg, #1e293b, #334155);
+}
+
+[data-md-color-scheme="slate"] .canvas-container {
+    background: #0f172a;
+}
+
+[data-md-color-scheme="slate"] .loading-text {
+    background: var(--md-default-bg-color);
+    color: var(--md-default-fg-color);
+}
+
+[data-md-color-scheme="slate"] .sketch-runner-component {
+    border-color: color-mix(in srgb, var(--md-default-fg-color) 20%, transparent);
+    box-shadow: 
+        0 4px 6px -1px color-mix(in srgb, black 40%, transparent),
+        0 2px 4px -1px color-mix(in srgb, black 30%, transparent);
+}
+
+[data-md-color-scheme="slate"] .sketch-runner-component:hover {
+    box-shadow: 
+        0 10px 15px -3px color-mix(in srgb, black 50%, transparent),
+        0 4px 6px -2px color-mix(in srgb, black 40%, transparent);
+}
+
+/* =================================================================
+   ANIMAÇÕES E TRANSIÇÕES
+   ================================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sketch-runner-component {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animação de loading para canvas */
+.canvas-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        color-mix(in srgb, var(--md-accent-fg-color) 20%, transparent) 50%,
+        transparent 70%
+    );
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* =================================================================
+   INTEGRAÇÃO COM MKDOCS MATERIAL
+   ================================================================= */
+
+.md-content .sketch-runner-component {
+    margin: 2.5rem 0;
+}
+
+.md-content .sketch-runner {
+    margin: 2rem 0;
+}
+
+/* Ajustes para modo print */
+@media print {
+    .sketch-runner-component {
+        box-shadow: none;
+        border: 2px solid var(--md-default-fg-color--lighter);
+    }
+    
+    .controls {
+        display: none;
+    }
+}

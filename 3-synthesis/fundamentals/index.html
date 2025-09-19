@@ -1,0 +1,1337 @@
+<!DOCTYPE html><html lang="pt" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Conteúdo interativo sobre conceitos e ferramentas para geração e processamento de imagem">
+      
+      
+        <meta name="author" content="Jackson Souza">
+      
+      
+        <link rel="canonical" href="https://jacksongomesbr.github.io/edu-cg/3-synthesis/fundamentals/">
+      
+      
+        <link rel="prev" href="../processing/">
+      
+      
+        <link rel="next" href="../randomness/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Fundamentos do Processing - Computação Gráfica</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/example-player.css">
+    
+      <link rel="stylesheet" href="../../assets/css/sketch-runner.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fundamentos-do-processing" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Computação Gráfica" class="md-header__button md-logo" aria-label="Computação Gráfica" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Computação Gráfica
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fundamentos do Processing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Compartilhar" aria-label="Compartilhar" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jacksongomesbr/edu-cg" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksongomesbr/edu-cg
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../0-course/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Curso
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../1-computacao-grafica/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Computação Gráfica
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../2-digital-imaging/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Imagem Digital
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Síntese
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../4-math/trigonometry/" class="md-tabs__link">
+          
+  
+  
+  Matemática
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Computação Gráfica" class="md-nav__button md-logo" aria-label="Computação Gráfica" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Computação Gráfica
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jacksongomesbr/edu-cg" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksongomesbr/edu-cg
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../0-course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Curso
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-computacao-grafica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Computação Gráfica
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2-digital-imaging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Imagem Digital
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Síntese
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Síntese
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introdução
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Processing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Fundamentos do Processing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentos do Processing
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ambiente-de-desenvolvimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ambiente de desenvolvimento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrutura-do-sketch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estrutura do sketch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desenhando-formas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desenhando formas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animacao-basica" class="md-nav__link">
+    <span class="md-ellipsis">
+      Animação básica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deteccao-de-colisao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detecção de colisão
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocidade-e-direcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velocidade e direção
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Aleatoriedade
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vetores
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6">
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Transformações 2D
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Transformações 2D
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introdução
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/translation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Translação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/rotation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rotação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/scaling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Escala
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Combinação de transformações
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformations/transformation-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Matriz de transformação 2D
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Matemática
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Matemática
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-math/trigonometry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trigonometria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Matrizes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Matrizes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-math/matrices/determinant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Determinantes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fundamentos-do-processing">Fundamentos do Processing<a class="headerlink" href="#fundamentos-do-processing" title="Permanent link">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O conteúdo deste curso, em termos de Processing, utiliza a p5.js (Processing para JavaScript)</p>
+</div>
+<h2 id="ambiente-de-desenvolvimento">Ambiente de desenvolvimento<a class="headerlink" href="#ambiente-de-desenvolvimento" title="Permanent link">¶</a></h2>
+<p>O p5.js pode ser utilizado diretamente no browser, por meio do <a href="https://editor.p5js.org/">p5.js Web Editor</a> ou localmente, por exemplo, utilizando o <a href="https://code.visualstudio.com/">Visual Studio Code (VS Code)</a>.</p>
+<p>No caso do Web Editor, sugiro que você crie uma conta de usuário para poder salvar seus sketches e, assim, ter acesso a eles em qualquer momento e de qualquer lugar. A utilizar o VS Code, recomendo utilizar em conjunto com um sistema de versionamento de código-fonte como o Github.</p>
+<h2 id="estrutura-do-sketch">Estrutura do sketch<a class="headerlink" href="#estrutura-do-sketch" title="Permanent link">¶</a></h2>
+<p>O sketch é um arquivo de texto com código-fonte escrito em JavaScript. Assim, a p5.js é uma biblioteca para JavaScript que permite a criação de programas coloridos, com recursos de animação e interação com os usuários. </p>
+<p>Ao utilizar o Web Editor, ele começa com o seguinte código inicial do sketch:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">&nbsp; </span><span class="nx">createCanvas</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="w"> </span><span class="mf">400</span><span class="p">);</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">&nbsp; </span><span class="nx">background</span><span class="p">(</span><span class="mf">220</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>O código (uma espécie de <em>hello world</em>) está dividido em dois blocos que se comportam de maneiras diferentes:</p>
+<ul>
+<li>bloco <a href="https://p5js.org/reference/p5/setup/"><code>setup()</code></a> executa apenas uma vez, assim que o sketch inicia sua execução</li>
+<li>bloco <a href="https://p5js.org/reference/p5/draw/"><code>draw()</code></a> executa repetidamente enquanto o sketch está em execução, por padrão, 60 vezes por segundo (60fps)</li>
+</ul>
+<p>Além disso, o sketch utiliza duas funções básicas:</p>
+<ul>
+<li><a href="https://p5js.org/reference/p5/createCanvas/"><code>createCanvas()</code></a> cria um elemento <code>canvas</code> (do HTML) de acordo com os parâmetros informados. No sketch, chamar <code>createCanvas(400, 400)</code> significa criar um canvas com <span class="arithmatex">\(400 \times 400\)</span> pixels</li>
+<li><a href="https://p5js.org/reference/p5/background/"><code>background()</code></a> define a cor de fundo do background do canvas. No sketch, chamar <code>background(220)</code> significa pintar o canvas em um tom de cinza claro</li>
+</ul>
+<h2 id="desenhando-formas">Desenhando formas<a class="headerlink" href="#desenhando-formas" title="Permanent link">¶</a></h2>
+<p>O desenho de formas pode ser feito por meio de funções que desenham "primitivas" geométricas, como <code>circle()</code> para desenhar círculos e <code>rect()</code>, para retângulos. O sketch a seguir utiliza funções para desenhar algumas primitivas.</p>
+<div class="example-player" data-example-title="Walker random" data-example-path="https://jacksongomesbr.github.io/edu-cg//examples/synthesis/8-fundamentals-shapes" data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/JHj7jhJsp">
+</div>
+
+<p>Parte do sketch contém o seguinte.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">halfHeight</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nx">background</span><span class="p">(</span><span class="mf">255</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nx">point</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nx">line</span><span class="p">(</span><span class="mf">50</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="p">,</span><span class="w"> </span><span class="mf">150</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="p">);</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nx">circle</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="p">,</span><span class="w"> </span><span class="mf">50</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="nx">rect</span><span class="p">(</span><span class="mf">250</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">25</span><span class="p">,</span><span class="w"> </span><span class="mf">50</span><span class="p">,</span><span class="w"> </span><span class="mf">50</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="nx">triangle</span><span class="p">(</span><span class="mf">325</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">25</span><span class="p">,</span><span class="w"> </span><span class="mf">350</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">25</span><span class="p">,</span><span class="w"> </span><span class="mf">375</span><span class="p">,</span><span class="w"> </span><span class="nx">halfHeight</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">25</span><span class="p">);</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>O sketch utiliza a variável <code>halfHeight</code> para armazenar o valor da metade da altura do canvas (que é obtido a partir da constante <a href="https://p5js.org/reference/p5/height/"><code>height</code></a>). </p>
+<p>A função <a href="https://p5js.org/reference/p5/point/"><code>point()</code></a> desenha um ponto (por padrão, de dimensão <span class="arithmatex">\(1 \times 1\)</span> pixels) na coordenada <code>(x, y)</code>. Neste caso, o ponto é desenhado na coordenada <code>(10, halfHeight)</code>.</p>
+<p>A função <a href="https://p5js.org/reference/p5/line/"><code>line()</code></a> desenha uma linha reta da coordenada <code>(x1, y1)</code> até a coordeanda <code>(x2, y2)</code>. </p>
+<p>A função <a href="https://p5js.org/reference/p5/circle/"><code>circle()</code></a> desenha um círculo a partir do centro na coordenada <code>(x, y)</code> com diâmetro <code>d</code>. Neste caso, o centro do círculo está exatamente no meio do canvas.</p>
+<p>A função <a href="https://p5js.org/reference/p5/rect/"><code>rect()</code></a> desenha um retângulo com o canto superior direito na coordenada <code>(x, y)</code> com largura <code>w</code> e altura <code>h</code>. Perceba a matemática necessária para posicionar adequadamente o retângulo, já que seu desenho não parte do centro, como no caso do círculo, mas no canto superior esquerdo.</p>
+<p>Por fim, a função <a href="https://p5js.org/reference/p5/triangle/"><code>triangle()</code></a> desenha um triângulo com base em três coordenadas:</p>
+<ul>
+<li>a coordenada posicionada na base mais à esquerda é o início, a coordenada <code>(x1, y1)</code></li>
+<li>na sequência, a coordenada do topo <code>(x2, y2)</code></li>
+<li>por fim, na base e mais à direita, a coordenada <code>(x3, y3)</code></li>
+</ul>
+<p>A figura a seguir ajuda a ilustrar essas informações, indicando as coordenadas e os valores utilizados para o desenho de cada forma primitiva.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../image1.png" data-desc-position="bottom"><img alt="" src="../image1.png"></a></p>
+<p>Na sequência das habilidades iniciais de lidar com a p5.js, temos a evolução para utilizar recursos de animação, o que mostra a próxima seção.</p>
+<h2 id="animacao-basica">Animação básica<a class="headerlink" href="#animacao-basica" title="Permanent link">¶</a></h2>
+<p>A função <code>draw()</code> está presente na estrutura do sketch para permitir executar código dentro de um "loop", que geralmente executa cerca de 60 vezes por segundo. Daí uma associação à quantidade de "quadro por segundo" (frames per second, ou FPS).</p>
+<p>Código que realiza animação, geralmente, altera valores de variáveis ou parâmetros dentro da função <code>draw()</code>. Por isso, o sketch a seguir ilustra como funciona o movimento de um círculo para baixo, no eixo y.</p>
+<div class="example-player" data-example-title="Animation basics" data-example-path="https://jacksongomesbr.github.io/edu-cg//examples/synthesis/9-fundamentals-animation" data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/nk-DE6mB_">
+</div>
+
+<p>Desconsidere que o sketch tem várias informações visuais extras na tela, o importante é o controle da movimentação do círculo. Assim, a parte importante que queremos considerar está aqui.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">;</span><span class="w">     </span><span class="c1">// As coordenadas do centro do círculo</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">var</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50</span><span class="p">;</span><span class="w">     </span><span class="c1">// O diâmetro do círculo</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">var</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w">  </span><span class="c1">// O raio do círculo (metade do diâmetro)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kd">function</span><span class="w"> </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nx">createCanvas</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="w"> </span><span class="mf">400</span><span class="p">);</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="nx">cx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="c1">// 1: desenha</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="nx">background</span><span class="p">(</span><span class="mf">220</span><span class="p">);</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span><span class="nx">circle</span><span class="p">(</span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="p">);</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span><span class="c1">// 2: determina a próxima posição</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="nx">cy</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>As coordenadas do centro do círculo, variáveis <code>cx</code> e <code>cy</code>, são iniciadas na função <code>setup()</code> para estarem no centro do canvas. O código da função <code>draw()</code> é responsável por desenhar o círculo na posição atual e também atualizar próxima posição do círculo, incrementando o valor da variável <code>cy</code> em uma unidade. O resultado disso é que o círculo "parece" se movimentar para baixo. </p>
+<p>De fato, isso determina um <strong>framework</strong> para o código que realiza animação:</p>
+<ol>
+<li>desenhar; e</li>
+<li>calcular e atualizar posições e outros parâmetros para o próximo frame;</li>
+<li>repetir.</li>
+</ol>
+<p>Este framework vai ser atualizado para incluir outros elementos posteriormente, mas, por enquanto, ele é fundamental para entendermos a lógica da animação baseada em atualização de quadros por segundo.</p>
+<h2 id="deteccao-de-colisao">Detecção de colisão<a class="headerlink" href="#deteccao-de-colisao" title="Permanent link">¶</a></h2>
+<p>A detecção de colisão é uma parte importante da animação e da criação de experiências interativas em computação gráfica. É esse o conceito que permite executar um código diferente quando um objeto, por exemplo, um círculo, encontra uma área que é tomada por outro objeto, por exemplo, uma parede.</p>
+<p>A detecção de colisão é seguida por um tratamento, ou seja, o que deve ser feito <strong>quando</strong> ocorrer uma colisão.</p>
+<p>Voltando ao exemplo da animação do círculo que vai para baixo, em direção à parte inferior do canvas, pdoeríamos dizer que nosso interesse seria parar a animação quando o centro do círculo atingisse determinado valor na coordenada y. </p>
+<p>A lógica, neste caso, precisa de um ajuste porque a coordenada do centro do círculo não pode ser a mesma da altura do canvas porque isso faria com que metade do círculo fosse desenhada para fora do canvas. Assim, precisamos considerar que a soma entre a coordenada y do centro do círculo e o raio é que deve ser menor do que a altura para que o círculo continue se movendo.</p>
+<p>Essa lógica é representada no condicional dentro da função <code>draw()</code>.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="c1">// 1: desenha</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nx">background</span><span class="p">(</span><span class="mf">220</span><span class="p">);</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">circle</span><span class="p">(</span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="c1">// 2: determina a próxima posição</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nx">cy</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span>
+</span></code></pre></div>
+<p>Há ainda mais um ajuste: considerar a altura menos 1, que é a unidade da linha de borda para desenho do círculo.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O formato padrão de desenho do círculo não é apenas o círculo, mas considera, além das propriedades já indicadas, uma borda de um pixel de unidade e o preenchimento.</p>
+</div>
+<p>Essa lógica complementa o <strong>framework de animação</strong>:</p>
+<ol>
+<li>desenhar;</li>
+<li>calcular a próxima posição;</li>
+<li>detectar colisão;<ol>
+<li>se não tiver colisão, atualizar a posição;</li>
+<li>se tiver colisão, não atualizar a posição;</li>
+</ol>
+</li>
+<li>repetir.</li>
+</ol>
+<p>Com isso, temos animação, detecção e tratamento de colisão para que o movimento do círculo dentro do canvas represente uma simulação mais confiável segundo alguns critérios de conhecimento do mundo real a respeito de como seria observar o fenômeno de uma esfera se movendo dentro de uma caixa.</p>
+<p>Para finalizar esta introdução, o próximo sketch introduz dois conceitos importantes: velocidade e direção.</p>
+<h2 id="velocidade-e-direcao">Velocidade e direção<a class="headerlink" href="#velocidade-e-direcao" title="Permanent link">¶</a></h2>
+<p>O framework de animação de movimento apresentado até aqui altera a posição do círculo em uma unidade. O que aconteceria se o incremento fosse em 5 ou 10 unidades? A resposta mais óbvia é que o círculo precisaria de menos quadros (passos de animação) para chegar até a borda do canvas.</p>
+<p>Este é um conceito intuitivo de <strong>velocidade</strong>: a magnitude do incremento na posição faz com que o círculo precise de menos ou mais quadros para alcançar a borda da caixa, ou seja, mais ou menos tempo, já que temos o conceito de quadros por segundo (FPS).</p>
+<p>Outro conceito importante é o de <strong>direção</strong>. Um incremento no eixo Y faz o círculo se mover para baixo. Um decremento, ou um incremento de um valor negativo, faz o círculo se mover para cima. Assim, podemos afirmar que o sinal do incremento determina a direção:</p>
+<ul>
+<li>sinal positivo: para baixo;</li>
+<li>sinal negativo: para cima.</li>
+</ul>
+<p>O sketch a seguir ilustra estes conceitos.</p>
+<div class="example-player" data-example-title="Animation basics" data-example-path="https://jacksongomesbr.github.io/edu-cg//examples/synthesis/10-fundamentals-animation-direction" data-p5-editor="https://editor.p5js.org/jacksongomes/sketches/cSPml5I7m">
+</div>
+
+<p>A parte que nos interessa do sketch está aqui.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">var</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">var</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kd">var</span><span class="w"> </span><span class="nx">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mf">1</span><span class="p">;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">var</span><span class="w"> </span><span class="nx">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nx">background</span><span class="p">(</span><span class="mf">220</span><span class="p">);</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="c1">// desenha círculo</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="nx">circle</span><span class="p">(</span><span class="nx">cx</span><span class="p">,</span><span class="w"> </span><span class="nx">cy</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="p">);</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span><span class="c1">// calcula a próxima posição</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">nextcy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">direction</span><span class="p">;</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">  </span><span class="c1">// detecta e trata colisão</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">nextcy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">nextcy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="nx">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">direction</span><span class="p">;</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="nx">cy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">nextcy</span><span class="p">;</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>A variável <code>speed</code> determina a velocidade do movimento do círculo e é iniciada com o valor <code>5</code>. A variável <code>direction</code> determina a direção do movimento (para cima ou para baixo) e é iniciada com o valor <code>+1</code> (o círculo inicia movendo-se para baixo).</p>
+<p>Outra diferença para o sketch anterior está na forma como calculamos a próxima posição. Agora precisamos levar em consideração não apenas o valor da coordenada y do centro do círculo, mas também a velocidade e a direção. A equação a seguir representa o que precisamos neste momento.</p>
+<div class="arithmatex">\[
+y_{next} = y + speed \times direction
+\]</div>
+<p>Assim, o próximo valor de y é resultado da soma entre o valor atual de y e a multiplicação entre velocidade e direção. Se essa parcela da soma que envolve a velocidade e a direção for positiva, o próximo valor de y também será e, assim, o círculo se moverá para baixo. Caso contrário, se a parcela for negativa, o círculo se moverá para cima.</p>
+<p>Por fim, a detecção e o tratamento de colisão passa por uma alteração para que o círculo, ao colidir com a parte inferior do canvas, mova-se para cima e, ao colidir com a parte superior do canvas, mova-se para baixo. A inversão a direção é justamente o que ocorre se houver uma colisão, determinada pelo condicional a seguir.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">nextcy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">height</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">nextcy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nx">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nx">direction</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Assim, o framework de animação de movimento passa por uma última atualização nesta seção do livro:</p>
+<ol>
+<li>desenhar;</li>
+<li>calcular a próxima posição com base na velocidade e direção;</li>
+<li>detectar colisão;<ol>
+<li>se não tiver colisão, atualizar a posição;</li>
+<li>se tiver colisão, alternar a direção;</li>
+</ol>
+</li>
+<li>repetir.</li>
+</ol>
+<p>Essa é a lógica para o funcionamento de uma animação de movimento de um círculo se movendo para cima e para baixo dentro do canvas.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.integrate", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../assets/js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/sketch-runner-iframe.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
