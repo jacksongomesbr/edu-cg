@@ -4,4 +4,3 @@ mkdocs-minify-plugin
 mkdocs-git-revision-date-localized-plugin
 mkdocs-glightbox
 pymdown-extensions
-material-extensions
